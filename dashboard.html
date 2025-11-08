@@ -1,46 +1,49 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DASHBOARD SCPD</title>
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css" />
   <script type="module" src="dashboard.js" defer></script>
 </head>
 <body>
-  <!-- Header -->
+  <!-- HEADER -->
   <header class="header">
     <div class="menu-toggle" id="menuToggle">&#9776;</div>
     <h1 class="title">DASHBOARD SCPD</h1>
+    <button id="logoutBtn" class="logout">🚪 Logout</button>
   </header>
 
-  <!-- Sidebar -->
+  <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <ul>
       <li><a href="#" id="menu-produk">📸 Kelola Produk</a></li>
       <li><a href="#" id="menu-analitik">📊 Analitik Konten</a></li>
       <li><a href="#" id="menu-aktivitas">📈 Aktivitas Admin</a></li>
-      <li><button id="logoutBtn" class="logout">🚪 Logout</button></li>
     </ul>
   </aside>
 
-  <!-- Konten -->
+  <!-- KONTEN UTAMA -->
   <main class="content" id="content">
+    <!-- PRODUK -->
     <section id="produk-section" class="active">
       <div class="produk-container" id="produk-container"></div>
       <button id="tambah-produk" class="btn-tambah">+ Tambah Produk</button>
     </section>
 
+    <!-- ANALITIK -->
     <section id="analitik-section" class="hidden">
       <canvas id="chartKonten"></canvas>
     </section>
 
+    <!-- AKTIVITAS -->
     <section id="aktivitas-section" class="hidden">
       <canvas id="chartAktivitas"></canvas>
     </section>
   </main>
 
-  <!-- Popup tambah produk -->
+  <!-- POPUP TAMBAH PRODUK -->
   <div class="popup hidden" id="popupForm">
     <div class="popup-content">
       <h2>Tambah Produk</h2>
