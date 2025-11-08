@@ -1,128 +1,271 @@
-body {
+/* === Warna Tema Utama === */
+:root {
+  --gold: #ffcc00;
+  --gold-glow: #ffd966;
+  --dark-bg: #0a0a0a;
+  --dark-card: rgba(20, 20, 20, 0.85);
+  --white: #fff;
+}
+
+/* === Reset Dasar === */
+* {
   margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--dark-bg);
+  color: var(--white);
   overflow-x: hidden;
 }
 
-/* Header */
+/* === Sidebar === */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 240px;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  border-right: 1px solid var(--gold);
+  padding-top: 20px;
+  transition: 0.3s;
+}
+
+.sidebar h2 {
+  text-align: center;
+  color: var(--gold);
+  margin-bottom: 30px;
+  text-shadow: 0 0 10px var(--gold);
+}
+
+.sidebar a {
+  display: block;
+  padding: 14px 20px;
+  color: var(--white);
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: var(--gold);
+  color: var(--dark-bg);
+  font-weight: bold;
+}
+
+/* === Header === */
 .header {
+  position: fixed;
+  top: 0;
+  left: 240px;
+  right: 0;
+  height: 70px;
+  background: rgba(20, 20, 20, 0.85);
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(20, 20, 20, 0.9);
+  justify-content: space-between;
+  padding: 0 25px;
+  border-bottom: 1px solid var(--gold);
+  backdrop-filter: blur(6px);
+}
+
+.header h1 {
+  flex: 1;
+  text-align: center;
+  color: var(--gold);
+  font-size: 1.8rem;
+  cursor: pointer;
+  text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.menu-icon {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--gold);
+}
+
+.logout-btn {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 6px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  position: absolute;
+  right: 25px;
+  top: 80px;
+}
+
+.logout-btn:hover {
+  background: var(--gold);
+  color: var(--dark-bg);
+  box-shadow: 0 0 10px var(--gold);
+}
+
+/* === Konten Utama === */
+.main-content {
+  margin-left: 240px;
+  padding: 100px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* === Produk === */
+.products-container {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 20px;
+  overflow-x: auto;
   padding: 20px;
-  box-shadow: 0 0 20px gold;
+  width: 90%;
+  justify-content: flex-start;
+  scrollbar-width: thin;
+}
+
+.products-container::-webkit-scrollbar {
+  height: 6px;
+}
+
+.products-container::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border-radius: 10px;
+}
+
+.product-card {
+  background: var(--dark-card);
+  border: 1px solid var(--gold);
+  border-radius: 15px;
+  padding: 15px;
+  width: 200px;
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.2);
+  transition: 0.3s;
   position: relative;
 }
 
-/* Tombol ☰ */
-.menu-icon {
-  position: absolute;
-  left: 25px;
-  font-size: 28px;
-  cursor: pointer;
-  color: gold;
-  transition: transform 0.2s;
-}
-.menu-icon:hover {
-  transform: scale(1.1);
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
 }
 
-/* Teks DASHBOARD */
-.neon-text {
-  background: linear-gradient(90deg, #ff9900, gold);
-  -webkit-background-clip: text;
-  color: transparent;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px gold, 0 0 20px orange;
-  cursor: pointer;
-  transition: text-shadow 0.3s;
-}
-.neon-text:hover {
-  text-shadow: 0 0 15px gold, 0 0 30px orange, 0 0 45px gold;
+.product-card img {
+  width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-/* Tombol Logout */
-.logout-btn {
+.delete-btn {
   position: absolute;
-  right: 25px;
-  top: 20px;
+  top: 8px;
+  right: 10px;
   background: transparent;
-  border: 2px solid gold;
-  color: gold;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-.logout-btn:hover {
-  background: gold;
-  color: black;
-  box-shadow: 0 0 15px gold;
-}
-
-/* Sidebar */
-.sidebar {
-  position: fixed;
-  left: -250px;
-  top: 0;
-  height: 100%;
-  width: 250px;
-  background: rgba(15, 15, 15, 0.98);
-  box-shadow: 2px 0 20px gold;
-  transition: 0.4s;
-  padding-top: 80px;
-}
-.sidebar.active {
-  left: 0;
-}
-.sidebar ul {
-  list-style: none;
-  padding: 0;
-}
-.sidebar li {
-  margin: 20px 0;
-}
-.sidebar a {
-  color: gold;
-  text-decoration: none;
-  padding: 10px 20px;
-  display: block;
-  transition: all 0.3s;
-}
-.sidebar a:hover {
-  background: gold;
-  color: black;
-  box-shadow: 0 0 20px gold;
-}
-
-/* Konten utama */
-.main-content {
-  height: calc(100vh - 100px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Tombol tambah produk di tengah */
-.center-add-btn {
-  background: linear-gradient(90deg, #ff9900, gold);
+  color: var(--gold);
   border: none;
-  color: black;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 20px 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 25px gold;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  font-size: 18px;
+  transition: 0.2s;
 }
-.center-add-btn:hover {
+
+.delete-btn:hover {
+  color: red;
+  text-shadow: 0 0 10px red;
+}
+
+/* === Tombol Tambah Produk === */
+.add-product-btn {
+  background: var(--gold);
+  color: var(--dark-bg);
+  border: none;
+  border-radius: 30px;
+  padding: 14px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 40px;
+  box-shadow: 0 0 20px var(--gold-glow);
+  transition: 0.3s;
+}
+
+.add-product-btn:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 35px gold, 0 0 55px orange;
+  box-shadow: 0 0 30px var(--gold);
+}
+
+/* === Modal Tambah Produk === */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: rgba(25, 25, 25, 0.9);
+  border: 1px solid var(--gold);
+  border-radius: 15px;
+  padding: 25px;
+  width: 380px;
+  color: var(--white);
+  text-align: center;
+  box-shadow: 0 0 25px rgba(255, 204, 0, 0.5);
+}
+
+.modal-content input,
+.modal-content textarea {
+  width: 100%;
+  margin: 8px 0;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--gold);
+  border-radius: 10px;
+  color: var(--white);
+}
+
+.modal-content button {
+  background: var(--gold);
+  color: var(--dark-bg);
+  border: none;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.modal-content button:hover {
+  box-shadow: 0 0 15px var(--gold-glow);
+}
+
+/* === Navigasi Kanan/Kiri === */
+.navigation-buttons {
+  margin-top: 20px;
+}
+
+.navigation-buttons button {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  margin: 0 8px;
+  transition: 0.3s;
+}
+
+.navigation-buttons button:hover {
+  background: var(--gold);
+  color: var(--dark-bg);
+  box-shadow: 0 0 10px var(--gold);
 }
