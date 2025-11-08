@@ -6,77 +6,67 @@ menuToggle.addEventListener("click", () => {
 });
 
 // Logout
-const logoutBtn = document.getElementById("logoutBtn");
-logoutBtn.addEventListener("click", () => {
-  // Arahkan ke halaman login
+document.getElementById("logoutBtn").addEventListener("click", () => {
   window.location.href = "index.html";
 });
 
-// Klik Dashboard → kembali ke halaman utama dashboard
-const dashboardTitle = document.getElementById("dashboardTitle");
-dashboardTitle.addEventListener("click", () => {
-  window.location.href = "dashboard.html"; // tetap di dashboard utama
+// Klik Dashboard → kembali ke halaman utama
+document.getElementById("dashboardTitle").addEventListener("click", () => {
+  window.location.href = "dashboard.html";
 });
 
-// Modal untuk Tambah Produk
+// Tombol Tambah Produk
 const addProductBtn = document.getElementById("addProductBtn");
 const centerAddProduct = document.getElementById("centerAddProduct");
-const modal = document.getElementById("addProductModal");
-const closeModal = document.getElementById("closeModal");
-const addProductForm = document.getElementById("addProductForm");
 
-// Buka modal
-function showAddProductModal() {
-  modal.style.display = "flex";
+function showAddProductForm() {
+  const formHTML = `
+    <div class="product-form">
+      <h2>Tambah Produk</h2>
+      <input type="text" id="productName" placeholder="Nama Produk" required><br>
+      <textarea id="productDesc" placeholder="Deskripsi Produk" rows="4"></textarea><br>
+      <input type="file" id="productImage" accept="image/*" required><br>
+      <button id="saveProduct">Simpan Produk</button>
+    </div>
+  `;
+  document.querySelector(".main-content").innerHTML = formHTML;
+
+  document.getElementById("saveProduct").addEventListener("click", async () => {
+    const name = document.getElementById("productName").value;
+    const desc = document.getElementById("productDesc").value;
+    const fileInput = document.getElementById("productImage");
+    const file = fileInput.files[0];
+
+    if (!name || !desc || !file) {
+      alert("Semua kolom wajib diisi!");
+      return;
+    }
+
+    // Convert gambar ke Base64
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const imageBase64 = e.target.result;
+
+      // Ambil produk yang sudah ada dari localStorage
+      let produkList = JSON.parse(localStorage.getItem("produkList")) || [];
+
+      // Tambahkan produk baru
+      produkList.push({
+        nama: name,
+        deskripsi: desc,
+        gambar: imageBase64,
+        dibuat: new Date().toLocaleString()
+      });
+
+      // Simpan kembali ke localStorage
+      localStorage.setItem("produkList", JSON.stringify(produkList));
+
+      alert("Produk berhasil disimpan!");
+      window.location.href = "produk.html";
+    };
+    reader.readAsDataURL(file);
+  });
 }
 
-// Tutup modal
-closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
-  addProductForm.reset(); // Reset form saat tutup
-});
-
-// Klik di luar modal untuk tutup
-window.addEventListener("click", (event) => {
-  if (event.target === modal) {
-    modal.style.display = "none";
-    addProductForm.reset();
-  }
-});
-
-// Event listener untuk tombol
-addProductBtn.addEventListener("click", showAddProductModal);
-centerAddProduct.addEventListener("click", showAddProductModal);
-
-// Submit form: Upload ke Firebase Storage dan simpan ke Firestore
-addProductForm.addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const productName = document.getElementById("productName").value;
-  const productDescription = document.getElementById("productDescription").value;
-  const productImage = document.getElementById("productImage").files[0];
-
-  if (!productImage) {
-    alert("Pilih gambar produk!");
-    return;
-  }
-
-  try {
-    // Upload gambar ke Firebase Storage
-    const storageRef = ref(window.storage, `products/${Date.now()}_${productImage.name}`);
-    await uploadBytes(storageRef, productImage);
-    const imageUrl = await getDownloadURL(storageRef);
-
-    // Simpan data ke Firestore
-    await addDoc(collection(window.db, "products"), {
-      name: productName,
-      description: productDescription,
-      imageUrl: imageUrl,
-      createdAt: new Date()
-    });
-
-    alert("Produk berhasil ditambahkan!");
-    modal.style.display = "none";
-    addProductForm.reset();
-  }
-});
+addProductBtn.addEventListener("click", showAddProductForm);
+centerAddProduct.addEventListener("click", showAddProductForm);
