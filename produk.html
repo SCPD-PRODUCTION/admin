@@ -13,38 +13,86 @@
   </header>
 
   <main class="main-content" style="flex-direction: column; align-items: center;">
-    <div id="produkContainer" class="produk-container"></div>
+    <div id="sliderArea"></div>
+    <button id="lihatSemuaBtn" class="lihat-semua-btn" style="display: none;">Lihat Semua Produk</button>
   </main>
 
   <script>
     const produkList = JSON.parse(localStorage.getItem("produkList")) || [];
-    const container = document.getElementById("produkContainer");
+    const sliderArea = document.getElementById("sliderArea");
+    const lihatSemuaBtn = document.getElementById("lihatSemuaBtn");
+    const LINK_WA = "https://wa.me/message/ABCDEF123XYZ"; // ganti ke link wame kamu
 
-    // 🔗 Link WhatsApp kamu (gunakan link wame)
-    const LINK_WA = "https://wa.link/xo29yr"; // ← ganti dengan link wame kamu sendiri
+    // fungsi buat kartu produk
+    function buatKartu(produk) {
+      const card = document.createElement("div");
+      card.classList.add("produk-card");
+      card.innerHTML = `
+        <img src="${produk.gambar}" alt="${produk.nama}">
+        <div class="produk-info">
+          <h3>${produk.nama}</h3>
+          <p>${produk.deskripsi}</p>
+        </div>
+        <div class="produk-footer">
+          <span class="harga">Rp ${produk.harga ? produk.harga.toLocaleString('id-ID') : '-'}</span>
+          <a href="${LINK_WA}?text=${encodeURIComponent(
+            `Halo, saya ingin membeli produk ${produk.nama} seharga Rp ${produk.harga?.toLocaleString('id-ID') || '-'}`
+          )}" target="_blank" class="beli-btn">Beli</a>
+        </div>
+      `;
+      return card;
+    }
 
+    // tampilkan hingga 5 baris slider
     if (produkList.length === 0) {
-      container.innerHTML = "<p>Tidak ada produk yang tersimpan.</p>";
+      sliderArea.innerHTML = "<p>Tidak ada produk yang tersimpan.</p>";
     } else {
-      produkList.forEach((produk) => {
-        const card = document.createElement("div");
-        card.classList.add("produk-card");
-        card.innerHTML = `
-          <img src="${produk.gambar}" alt="${produk.nama}">
-          <div class="produk-info">
-            <h3>${produk.nama}</h3>
-            <p>${produk.deskripsi}</p>
-          </div>
-          <div class="produk-footer">
-            <span class="harga">Rp ${produk.harga ? produk.harga.toLocaleString('id-ID') : '-'}</span>
-            <a href="${LINK_WA}?text=${encodeURIComponent(
-              `Halo, saya ingin membeli produk ${produk.nama} seharga Rp ${produk.harga?.toLocaleString('id-ID') || '-'}`
-            )}" 
-            target="_blank" class="beli-btn">Beli</a>
-          </div>
+      const maxBaris = 5;
+      const produkPerBaris = 20;
+      const totalBaris = Math.ceil(produkList.length / produkPerBaris);
+
+      for (let i = 0; i < Math.min(totalBaris, maxBaris); i++) {
+        const start = i * produkPerBaris;
+        const end = start + produkPerBaris;
+        const barisProduk = produkList.slice(start, end);
+
+        const sliderWrapper = document.createElement("div");
+        sliderWrapper.classList.add("produk-slider-container");
+        sliderWrapper.innerHTML = `
+          <button class="slider-btn prevBtn">⬅</button>
+          <div class="produk-container horizontal-scroll"></div>
+          <button class="slider-btn nextBtn">➡</button>
         `;
-        container.appendChild(card);
-      });
+        const container = sliderWrapper.querySelector(".produk-container");
+
+        barisProduk.forEach((p) => container.appendChild(buatKartu(p)));
+        sliderArea.appendChild(sliderWrapper);
+
+        const scrollAmount = 5 * 320;
+        sliderWrapper.querySelector(".nextBtn").addEventListener("click", () => {
+          container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+        });
+        sliderWrapper.querySelector(".prevBtn").addEventListener("click", () => {
+          container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+        });
+      }
+
+      // kalau lebih dari 100 produk (5x20), tampilkan tombol lihat semua
+      if (produkList.length > maxBaris * produkPerBaris) {
+        lihatSemuaBtn.style.display = "block";
+        lihatSemuaBtn.addEventListener("click", tampilkanSemuaProduk);
+      }
+    }
+
+    // fungsi menampilkan semua produk tanpa batas
+    function tampilkanSemuaProduk() {
+      sliderArea.innerHTML = "";
+      lihatSemuaBtn.style.display = "none";
+
+      const grid = document.createElement("div");
+      grid.classList.add("produk-container");
+      produkList.forEach((p) => grid.appendChild(buatKartu(p)));
+      sliderArea.appendChild(grid);
     }
   </script>
 </body>
