@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin SCPD_PRODUCTION</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Login Page -->
+<div id="loginPage" class="login-page">
+  <h2 class="blink">Login Admin SCPD</h2>
+  <button id="loginGoogleBtn" class="btn-google">Login dengan Google</button>
+  <p id="loginError" class="error-text"></p>
+</div>
+
+<!-- Dashboard Page -->
+<div id="dashboard" class="dashboard" style="display:none;">
+  <h2 class="blink">Tambah Produk SCPD</h2>
+  <div class="form-group">
+    <input type="text" id="title" placeholder="Judul" class="input-field">
+    <textarea id="description" placeholder="Deskripsi" class="input-field"></textarea>
+    <input type="number" id="price" placeholder="Harga" class="input-field">
+    <input type="file" id="image" class="input-field">
+    <button id="addBtn" class="btn-submit">Tambah Produk</button>
+  </div>
+
+  <h2 class="blink">Produk SCPD Saat Ini</h2>
+  <div id="products" class="products-list"></div>
+</div>
+
+<script type="module" src="script.js"></script>
+</body>
+</html>
