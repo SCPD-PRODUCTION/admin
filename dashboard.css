@@ -198,4 +198,159 @@ body {
   max-width: 300px;
   display: flex;
   flex-direction: column;
-  justify-conte
+  justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.produk-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px gold;
+}
+
+/* Gambar Produk */
+.produk-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Info Produk */
+.produk-info {
+  padding: 15px;
+}
+.produk-info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: gold;
+}
+.produk-info p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ddd;
+  text-align: justify;
+}
+
+/* Footer Harga dan Tombol Beli */
+.produk-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-top: 1px solid gold;
+}
+.harga {
+  color: gold;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Tombol beli warna khas WhatsApp */
+.beli-btn {
+  background: linear-gradient(90deg, #25d366, #128c7e);
+  color: white;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.beli-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #25d366;
+}
+
+/* =============================
+   SLIDER PRODUK (TAK TERBATAS BARIS)
+============================= */
+.produk-slider-container {
+  position: relative;
+  width: 90%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.produk-container.horizontal-scroll {
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px;
+  scrollbar-width: none;
+}
+.produk-container.horizontal-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.produk-card {
+  min-width: 300px;
+  max-width: 300px;
+  flex-shrink: 0;
+}
+
+/* Tombol panah kiri/kanan */
+.slider-btn {
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid gold;
+  color: gold;
+  font-size: 26px;
+  font-weight: bold;
+  width: 50px;
+  height: 80px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 5;
+}
+.slider-btn:hover {
+  background: gold;
+  color: black;
+  transform: scale(1.05);
+  box-shadow: 0 0 20px gold;
+}
+.prevBtn {
+  position: absolute;
+  left: -60px;
+}
+.nextBtn {
+  position: absolute;
+  right: -60px;
+}
+
+/* Tombol Lihat Semua */
+.lihat-semua-btn {
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: 18px;
+  font-weight: 600;
+  background: linear-gradient(90deg, #ff9900, gold);
+  color: black;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.lihat-semua-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px gold;
+}
+
+/* =============================
+   ANIMASI TRANSISI HALUS
+============================= */
+.fade-in {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+.fade-out {
+  animation: fadeOut 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(20px); }
+}
