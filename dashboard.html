@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="dashboard-container">
+    <h1 class="title blink">DASHBOARD</h1>
+    <p>Selamat datang, <span id="adminName"></span></p>
+    <button id="logoutBtn" class="btn">Logout</button>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="firebase.js"></script>
+<script>
+// Pastikan hanya user yang login bisa akses dashboard
+firebase.auth().onAuthStateChanged(user => {
+    if(user) {
+        document.getElementById('adminName').innerText = user.displayName;
+    } else {
+        window.location.href = 'index.html';
+    }
+});
+
+// Logout
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    firebase.auth().signOut().then(() => {
+        window.location.href = 'index.html';
+    });
+});
+</script>
+</body>
+</html>
