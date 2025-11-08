@@ -5,51 +5,74 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SCPD Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-storage.js";
+
+    // Konfigurasi Firebase (ganti dengan config proyek Anda)
+    const firebaseConfig = {
+      apiKey: "AIzaSyC5gAbdlbVL3t6oreb_ZZhAUT1YJVTKwPU",
+      authDomain: "scpd-production.firebaseapp.com",
+      databaseURL: "https://scpd-production-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "scpd-production",
+      storageBucket: "scpd-production.firebasestorage.app",
+      messagingSenderId: "72136560829",
+      appId: "1:72136560829:web:1c14d8087f9c3b88ade7d4",
+      measurementId: "G-LGXCFVNFTH"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // Ekspor untuk digunakan di dashboard.js
+    window.firebaseApp = app;
+    window.db = db;
+    window.storage = storage;
+  </script>
 </head>
 <body>
-  <header>
-    <div class="menu-btn" id="menuBtn">&#9776;</div>
-    <h1 id="dashboardTitle">DASHBOARD</h1>
-    <button id="logoutBtn">Logout</button>
-    <link rel="stylesheet" href="index.html" />
+  <header class="header">
+    <div class="menu-icon" id="menuToggle">☰</div>
+    <h1 id="dashboardTitle" class="neon-text">DASHBOARD</h1>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
   </header>
 
-  <nav id="sideMenu" class="hidden">
+  <aside id="sidebar" class="sidebar">
     <ul>
-      <li><a href="dashboard.html">🏠 Beranda</a></li>
-      <li><a href="#">📊 Analitik Produk Populer</a></li>
-      <li><a href="#">🧮 Analitik Aktivitas Admin</a></li>
+      <li><a href="#" id="addProductBtn">Tambah Produk</a></li>
+      <li><a href="#">Data Analitik Produk</a></li>
+      <li><a href="#">Aktivitas Admin</a></li>
     </ul>
-  </nav>
+  </aside>
 
-  <main>
-    <button id="addProductBtn">+ Tambah Produk</button>
+  <main class="main-content">
+    <button id="centerAddProduct" class="center-add-btn">+ Tambah Produk</button>
   </main>
 
-  <!-- Modal Form Tambah Produk -->
-  <div id="addProductModal" class="modal hidden">
+  <!-- Modal untuk Tambah Produk -->
+  <div id="addProductModal" class="modal">
     <div class="modal-content">
-      <span id="closeModal" class="close">&times;</span>
-      <h2>Tambah Produk</h2>
+      <span class="close" id="closeModal">&times;</span>
+      <h2>Tambah Produk Baru</h2>
       <form id="addProductForm">
-        <label>Nama Produk:</label>
-        <input type="text" id="productName" required />
-
-        <label>Harga:</label>
-        <input type="number" id="productPrice" required />
-
-        <label>Deskripsi:</label>
+        <label for="productName">Nama Produk:</label>
+        <input type="text" id="productName" required>
+        
+        <label for="productDescription">Deskripsi:</label>
         <textarea id="productDescription" required></textarea>
-
-        <label>Gambar Produk:</label>
-        <input type="file" id="productImage" accept="image/*" required />
-
-        <button type="submit">Simpan Produk</button>
+        
+        <label for="productImage">Gambar Produk:</label>
+        <input type="file" id="productImage" accept="image/*" required>
+        
+        <button type="submit" class="submit-btn">Simpan Produk</button>
       </form>
-      <p id="uploadStatus"></p>
     </div>
   </div>
 
-  <script type="module" src="dashboard.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
