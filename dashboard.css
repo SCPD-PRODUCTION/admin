@@ -1,132 +1,128 @@
 body {
   margin: 0;
-  font-family: 'Poppins', sans-serif;
-}
-
-/* DASHBOARD */
-.dashboard-body {
-  background-color: #000;
+  background: #000;
   color: #fff;
-  min-height: 100vh;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
 }
 
-/* HEADER */
-.dashboard-header {
-  background: linear-gradient(90deg, #111, #222, #111);
-  color: gold;
+/* Header */
+.header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 15px 25px;
-  border-bottom: 2px solid gold;
-  box-shadow: 0 0 25px gold;
+  justify-content: center;
+  background: rgba(20, 20, 20, 0.9);
+  padding: 20px;
+  box-shadow: 0 0 20px gold;
   position: relative;
 }
 
-.dashboard-title {
-  font-size: 1.8rem;
-  background: linear-gradient(45deg, gold, orange);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 20px gold, 0 0 30px orange;
-  animation: blinkGold 1.5s infinite alternate;
-}
-
-@keyframes blinkGold {
-  from { opacity: 1; text-shadow: 0 0 20px orange; }
-  to { opacity: 0.6; text-shadow: 0 0 40px gold; }
-}
-
-/* BUTTONS */
-.menu-btn, .logout-btn, .add-btn {
-  background: gold;
-  border: none;
-  padding: 10px 15px;
-  border-radius: 8px;
+/* Tombol ☰ */
+.menu-icon {
+  position: absolute;
+  left: 25px;
+  font-size: 28px;
   cursor: pointer;
-  color: black;
-  font-weight: bold;
-  box-shadow: 0 0 10px gold, 0 0 20px orange;
-  transition: 0.3s;
+  color: gold;
+  transition: transform 0.2s;
 }
-.menu-btn:hover, .logout-btn:hover, .add-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px gold, 0 0 40px orange;
+.menu-icon:hover {
+  transform: scale(1.1);
 }
 
+/* Teks DASHBOARD */
+.neon-text {
+  background: linear-gradient(90deg, #ff9900, gold);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px gold, 0 0 20px orange;
+  cursor: pointer;
+  transition: text-shadow 0.3s;
+}
+.neon-text:hover {
+  text-shadow: 0 0 15px gold, 0 0 30px orange, 0 0 45px gold;
+}
+
+/* Tombol Logout */
 .logout-btn {
   position: absolute;
-  top: 15px;
   right: 25px;
+  top: 20px;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.logout-btn:hover {
+  background: gold;
+  color: black;
+  box-shadow: 0 0 15px gold;
 }
 
-/* SIDEBAR */
+/* Sidebar */
 .sidebar {
   position: fixed;
-  top: 70px;
-  left: 0;
-  width: 200px;
-  background: #111;
-  border-right: 2px solid gold;
-  box-shadow: 0 0 25px gold;
+  left: -250px;
+  top: 0;
   height: 100%;
-  padding-top: 20px;
-  transition: transform 0.3s ease;
+  width: 250px;
+  background: rgba(15, 15, 15, 0.98);
+  box-shadow: 2px 0 20px gold;
+  transition: 0.4s;
+  padding-top: 80px;
 }
-.sidebar.hidden {
-  transform: translateX(-220px);
+.sidebar.active {
+  left: 0;
 }
 .sidebar ul {
   list-style: none;
   padding: 0;
-  margin: 0;
 }
 .sidebar li {
-  padding: 12px 20px;
-  color: gold;
-  cursor: pointer;
+  margin: 20px 0;
 }
-.sidebar li:hover {
-  background: #222;
-  text-shadow: 0 0 10px gold;
+.sidebar a {
+  color: gold;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: all 0.3s;
+}
+.sidebar a:hover {
+  background: gold;
+  color: black;
+  box-shadow: 0 0 20px gold;
 }
 
-/* PRODUK */
-.product-header {
+/* Konten utama */
+.main-content {
+  height: calc(100vh - 100px);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  color: gold;
-}
-.product-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  padding: 20px;
   justify-content: center;
 }
-.product-card {
-  background: #111;
-  border: 1px solid gold;
-  border-radius: 12px;
-  box-shadow: 0 0 15px gold;
-  width: 200px;
-  text-align: center;
-  padding: 10px;
-}
-.product-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-.delete-btn {
-  background: red;
+
+/* Tombol tambah produk di tengah */
+.center-add-btn {
+  background: linear-gradient(90deg, #ff9900, gold);
   border: none;
-  padding: 8px 12px;
-  border-radius: 6px;
-  color: #fff;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px gold;
   cursor: pointer;
-  margin-top: 8px;
+  transition: all 0.3s ease-in-out;
+}
+.center-add-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px gold, 0 0 55px orange;
 }
