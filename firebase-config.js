@@ -20,7 +20,7 @@ function loginWithGoogle() {
     auth.signInWithPopup(provider)
         .then(result => {
             // Cek apakah user termasuk admin
-            const allowedAdmins = ["emailadmin1@gmail.com", "emailadmin2@gmail.com"]; // Ganti sesuai email admin
+            const allowedAdmins = ["tsaqibys@gmail.com", "scpdproduct@gmail.com"]; // Ganti sesuai email admin
             if(!allowedAdmins.includes(result.user.email)) {
                 alert("Akses ditolak! Hanya admin yang boleh login.");
                 auth.signOut();
