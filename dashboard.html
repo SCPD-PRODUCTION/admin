@@ -3,21 +3,28 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard | SCPD</title>
+  <title>SCPD Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
   <header class="header">
-    <button id="menuBtn" class="menu-btn">☰</button>
-    <h1 class="dashboard-title">DASHBOARD</h1>
+    <div class="menu-icon" id="menuToggle">☰</div>
+    <h1 id="dashboardTitle" class="neon-text">DASHBOARD</h1>
     <button id="logoutBtn" class="logout-btn">Logout</button>
   </header>
 
+  <aside id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="#" id="addProductBtn">Tambah Produk</a></li>
+      <li><a href="#">Data Analitik Produk</a></li>
+      <li><a href="#">Aktivitas Admin</a></li>
+    </ul>
+  </aside>
+
   <main class="main-content">
-    <h2>Kelola Produk</h2>
-    <button id="addProductBtn" class="add-btn">+ Tambah Produk</button>
+    <button id="centerAddProduct" class="center-add-btn">+ Tambah Produk</button>
   </main>
 
-  <script type="module" src="dashboard.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
