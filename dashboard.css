@@ -1,93 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
 body {
   margin: 0;
   font-family: 'Orbitron', sans-serif;
-  background: radial-gradient(circle at top, #000, #111);
+  background: #000;
   color: #FFD700;
+  overflow-x: hidden;
 }
 
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 15px 30px;
-  background: linear-gradient(90deg, #111, #222);
-  border-bottom: 2px solid #FFD700;
-  box-shadow: 0 0 15px #FFD700;
+  justify-content: center;
+  position: relative;
+  background: linear-gradient(90deg, #FFD700, #FFB300);
+  color: black;
+  padding: 15px;
+  box-shadow: 0 0 20px #FFD700;
+  animation: blink 2s infinite alternate;
 }
 
-.neon-text {
-  color: #FFD700;
-  text-shadow: 0 0 5px #FFD700, 0 0 20px #FFD700;
-  animation: neonGlow 1.5s infinite alternate;
+@keyframes blink {
+  0% { box-shadow: 0 0 15px #FFD700; }
+  100% { box-shadow: 0 0 30px #FFB300; }
 }
 
-@keyframes neonGlow {
-  from { text-shadow: 0 0 10px #FFD700; }
-  to { text-shadow: 0 0 25px #FFD700; }
+.title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+}
+
+.menu-toggle {
+  position: absolute;
+  left: 20px;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: black;
 }
 
 .sidebar {
   position: fixed;
   top: 0;
-  left: -260px;
-  width: 240px;
+  left: -250px;
+  width: 220px;
   height: 100%;
-  background: #111;
-  border-right: 2px solid #FFD700;
-  transition: left 0.3s ease;
-  z-index: 99;
+  background: rgba(20, 20, 20, 0.9);
+  backdrop-filter: blur(5px);
+  transition: left 0.4s ease;
+  box-shadow: 2px 0 15px #FFD700;
+  padding-top: 80px;
+  z-index: 1000;
 }
 
-.sidebar.active { left: 0; }
-.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
 .sidebar ul li {
-  padding: 15px 20px;
-  cursor: pointer;
-  border-bottom: 1px solid #333;
+  margin: 20px 0;
 }
-.sidebar ul li:hover { background: #222; }
 
-.menu-toggle {
-  cursor: pointer;
-  font-size: 1.5em;
+.sidebar ul li a, .sidebar ul li button {
   color: #FFD700;
+  text-decoration: none;
+  font-size: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.3s;
 }
 
-.section { display: none; padding: 20px; }
-.section.active { display: block; }
+.sidebar ul li a:hover, .sidebar ul li button:hover {
+  color: #FFB300;
+}
 
-.produk-grid {
+.content {
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.produk-container {
   display: flex;
   overflow-x: auto;
   gap: 20px;
+  padding: 20px;
+}
+
+.produk-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.produk-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, #FFD700, #FFB300);
+  border-radius: 4px;
 }
 
 .produk-card {
-  min-width: 180px;
-  background: #222;
+  background: rgba(30, 30, 30, 0.9);
   border: 2px solid #FFD700;
+  box-shadow: 0 0 20px #FFB300;
   border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 0 15px #FFD700;
+  padding: 15px;
+  min-width: 220px;
+  color: #FFD700;
 }
 
-.tambah-btn {
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  background: #FFD700;
-  color: #000;
-  font-weight: bold;
+.produk-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.btn-tambah {
+  margin-top: 25px;
+  background: linear-gradient(90deg, #FFD700, #FFB300);
   border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  color: black;
+  font-weight: bold;
+  padding: 10px 25px;
+  border-radius: 10px;
   cursor: pointer;
   box-shadow: 0 0 20px #FFD700;
-  animation: pulse 1.5s infinite alternate;
+  animation: glow 1.5s infinite alternate;
 }
 
-@keyframes pulse {
+@keyframes glow {
   from { box-shadow: 0 0 10px #FFD700; }
-  to { box-shadow: 0 0 30px #FFD700; }
+  to { box-shadow: 0 0 25px #FFB300; }
+}
+
+.popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001;
+}
+
+.popup-content {
+  background: #111;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+  box-shadow: 0 0 20px #FFB300;
+}
+
+.popup-content input, .popup-content textarea {
+  width: 100%;
+  margin: 10px 0;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #FFD700;
+  background: black;
+  color: #FFD700;
+}
+
+.hidden { display: none; }
+.active { display: block; }
+
+.logout {
+  color: red;
 }
