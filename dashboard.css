@@ -42,7 +42,7 @@ body {
 
 .logout {
   position: absolute;
-  right: 100px;
+  right: 180px;
   background: linear-gradient(90deg, #FFD700, #FF9100);
   border: none;
   color: black;
