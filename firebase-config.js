@@ -1,11 +1,4 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyC5gAbdlbVL3t6oreb_ZZhAUT1YJVTKwPU",
   authDomain: "scpd-production.firebaseapp.com",
@@ -18,5 +11,26 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
+
+// Login Google resmi dengan popup
+function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider)
+        .then(result => {
+            // Cek apakah user termasuk admin
+            const allowedAdmins = ["emailadmin1@gmail.com", "emailadmin2@gmail.com"]; // Ganti sesuai email admin
+            if(!allowedAdmins.includes(result.user.email)) {
+                alert("Akses ditolak! Hanya admin yang boleh login.");
+                auth.signOut();
+                return;
+            }
+            // Redirect ke dashboard
+            window.location.href = "dashboard.html";
+        })
+        .catch(error => {
+            console.error("Login gagal:", error);
+            alert("Login gagal, cek console.");
+        });
+}
