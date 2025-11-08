@@ -25,9 +25,7 @@ const imageInput = document.getElementById("image");
 // Login Google
 loginGoogleBtn.addEventListener("click", () => {
   const provider = new GoogleAuthProvider();
-  signInWithPopup(auth, provider).catch(err => {
-    loginError.textContent = err.message;
-  });
+  signInWithPopup(auth, provider).catch(err => { loginError.textContent = err.message; });
 });
 
 // Auth State
@@ -55,7 +53,6 @@ addBtn.addEventListener("click", async () => {
 
   try{
     await addDoc(collection(db,"products"), { title, description, price });
-    alert("Produk berhasil ditambahkan!");
     titleInput.value = "";
     descriptionInput.value = "";
     priceInput.value = "";
