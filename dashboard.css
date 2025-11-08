@@ -200,5 +200,23 @@ body {
   }
   to {
     text-shadow: 0 0 20px #FFB300, 0 0 40px #FFD700, 0 0 60px #FF9100;
+
+    /* Pastikan tombol bisa diklik */
+#menuToggle,
+#logoutBtn,
+#tambah-produk {
+  position: relative;
+  z-index: 2000;
+  pointer-events: auto;
+}
+
+/* Sidebar aktif tidak menutupi header */
+#sidebar {
+  z-index: 1500;
+}
+
+/* Popup form di atas segalanya */
+#popupForm {
+  z-index: 3000;
   }
 }
