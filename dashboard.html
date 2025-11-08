@@ -1,124 +1,54 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Dashboard — SCPD</title>
-
-  <!-- font -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-  <!-- css -->
-  <link rel="stylesheet" href="css/dashboard.css">
-
-  <!-- Firebase SDK will be loaded in module JS -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCPD Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
-  <header class="topbar">
-    <button id="menuBtn" class="hamburger" aria-label="Buka menu">☰</button>
-    <a id="homeLink" class="title" href="dashboard.html">DASHBOARD</a>
-    <div class="right-actions">
-      <button id="logoutBtn" class="logout">Logout</button>
-    </div>
+  <header>
+    <div class="menu-btn" id="menuBtn">&#9776;</div>
+    <h1 id="dashboardTitle">DASHBOARD</h1>
+    <button id="logoutBtn">Logout</button>
   </header>
 
-  <!-- Sidebar -->
-  <aside id="sidebar" class="sidebar" aria-hidden="true">
-    <div class="sidebar-inner">
-      <div class="sidebar-header">
-        <h4>Menu</h4>
-        <button id="closeSidebar" class="close-x">✕</button>
-      </div>
+  <nav id="sideMenu" class="hidden">
+    <ul>
+      <li><a href="dashboard.html">🏠 Beranda</a></li>
+      <li><a href="#">📊 Analitik Produk Populer</a></li>
+      <li><a href="#">🧮 Analitik Aktivitas Admin</a></li>
+    </ul>
+  </nav>
 
-      <div class="admin-set">
-        <label>Nama Admin</label>
-        <input id="adminName" placeholder="admin" />
-        <small class="muted">Gunakan nama ini untuk analitik aktivitas.</small>
-      </div>
-
-      <nav class="menu">
-        <button class="menu-item" data-target="panel-dashboard">Beranda</button>
-        <button class="menu-item" data-target="panel-analytics-products">Analitik Produk Populer</button>
-        <button class="menu-item" data-target="panel-analytics-admin">Analitik Aktivitas Admin</button>
-      </nav>
-
-      <div class="sidebar-footer">
-        <small>v1.0 — SCPD</small>
-      </div>
-    </div>
-  </aside>
-
-  <!-- Overlay for sidebar -->
-  <div id="overlay" class="overlay"></div>
-
-  <main class="main">
-    <!-- Panel: Dashboard (default) -->
-    <section id="panel-dashboard" class="panel active">
-      <div class="panel-inner">
-        <div class="center-area">
-          <button id="tambahBtn" class="add-btn">+ Tambah Produk</button>
-          <div id="panelStatus" class="panel-status">Menunggu interaksi...</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Panel: Analytics Products -->
-    <section id="panel-analytics-products" class="panel">
-      <div class="panel-inner">
-        <h3>Produk Terpopuler</h3>
-        <div id="topProducts" class="analytics-list">Memuat...</div>
-      </div>
-    </section>
-
-    <!-- Panel: Analytics Admin -->
-    <section id="panel-analytics-admin" class="panel">
-      <div class="panel-inner">
-        <h3>Aktivitas Admin (30 hari)</h3>
-        <div id="topAdmins" class="analytics-list">Memuat...</div>
-      </div>
-    </section>
-
-    <!-- Products list -->
-    <section class="products-section">
-      <div class="products-container">
-        <div id="productsList" class="products"></div>
-      </div>
-    </section>
+  <main>
+    <button id="addProductBtn">+ Tambah Produk</button>
   </main>
 
-  <!-- Modal: Tambah Produk -->
-  <div id="modalBackdrop" class="modal-backdrop" aria-hidden="true">
-    <div class="modal">
-      <h3>Tambah Produk</h3>
+  <!-- Modal Form Tambah Produk -->
+  <div id="addProductModal" class="modal hidden">
+    <div class="modal-content">
+      <span id="closeModal" class="close">&times;</span>
+      <h2>Tambah Produk</h2>
+      <form id="addProductForm">
+        <label>Nama Produk:</label>
+        <input type="text" id="productName" required />
 
-      <div class="field">
-        <label>Nama Produk</label>
-        <input id="prodName" type="text" placeholder="Contoh: Es Teh Manis" />
-      </div>
+        <label>Harga:</label>
+        <input type="number" id="productPrice" required />
 
-      <div class="field">
-        <label>Deskripsi</label>
-        <textarea id="prodDesc" rows="3" placeholder="Deskripsi singkat"></textarea>
-      </div>
+        <label>Deskripsi:</label>
+        <textarea id="productDescription" required></textarea>
 
-      <div class="field">
-        <label>Harga (Rp)</label>
-        <input id="prodPrice" type="number" placeholder="15000" />
-      </div>
+        <label>Gambar Produk:</label>
+        <input type="file" id="productImage" accept="image/*" required />
 
-      <div class="field">
-        <label>Gambar (opsional)</label>
-        <input id="prodImage" type="file" accept="image/*" />
-      </div>
-
-      <div class="modal-actions">
-        <button id="cancelBtn" class="btn-cancel">Batal</button>
-        <button id="saveBtn" class="btn-primary">Simpan</button>
-      </div>
+        <button type="submit">Simpan Produk</button>
+      </form>
+      <p id="uploadStatus"></p>
     </div>
   </div>
 
-  <!-- JS (module) -->
-  <script type="module" src="js/dashboard.js"></script>
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>
