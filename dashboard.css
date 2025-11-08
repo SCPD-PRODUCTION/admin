@@ -8,27 +8,27 @@ body {
   overflow-x: hidden;
 }
 
+/* HEADER */
 .header {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  background: linear-gradient(90deg, #FFD700, #FFB300);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(90deg, #FFD700, #FF9100);
   color: black;
-  padding: 15px;
-  box-shadow: 0 0 20px #FFD700;
-  animation: blink 2s infinite alternate;
-}
-
-@keyframes blink {
-  0% { box-shadow: 0 0 15px #FFD700; }
-  100% { box-shadow: 0 0 30px #FFB300; }
+  padding: 15px 50px;
+  box-shadow: 0 0 20px #FFB300;
+  z-index: 999;
 }
 
 .title {
   font-size: 1.8rem;
   font-weight: 700;
   letter-spacing: 3px;
+  animation: blinkGold 2s infinite alternate;
 }
 
 .menu-toggle {
@@ -37,20 +37,40 @@ body {
   font-size: 1.8rem;
   cursor: pointer;
   color: black;
+  user-select: none;
 }
 
+.logout {
+  position: absolute;
+  right: 25px;
+  background: linear-gradient(90deg, #FFD700, #FF9100);
+  border: none;
+  color: black;
+  font-weight: bold;
+  padding: 8px 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #FFB300;
+  transition: all 0.3s;
+}
+.logout:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #FFB300, #FFD700);
+}
+
+/* SIDEBAR */
 .sidebar {
   position: fixed;
   top: 0;
   left: -250px;
   width: 220px;
   height: 100%;
-  background: rgba(20, 20, 20, 0.9);
+  background: rgba(25, 25, 25, 0.95);
   backdrop-filter: blur(5px);
   transition: left 0.4s ease;
   box-shadow: 2px 0 15px #FFD700;
   padding-top: 80px;
-  z-index: 1000;
+  z-index: 998;
 }
 
 .sidebar.active {
@@ -67,20 +87,20 @@ body {
   margin: 20px 0;
 }
 
-.sidebar ul li a, .sidebar ul li button {
+.sidebar ul li a {
   color: #FFD700;
   text-decoration: none;
   font-size: 1rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: color 0.3s;
+  display: block;
+  padding: 10px 20px;
+  transition: background 0.3s;
+}
+.sidebar ul li a:hover {
+  background: linear-gradient(90deg, #FFB300, #FFD700);
+  color: black;
 }
 
-.sidebar ul li a:hover, .sidebar ul li button:hover {
-  color: #FFB300;
-}
-
+/* KONTEN */
 .content {
   padding: 100px 20px;
   text-align: center;
@@ -98,7 +118,7 @@ body {
 }
 
 .produk-container::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, #FFD700, #FFB300);
+  background: linear-gradient(90deg, #FFD700, #FF9100);
   border-radius: 4px;
 }
 
@@ -121,7 +141,7 @@ body {
 
 .btn-tambah {
   margin-top: 25px;
-  background: linear-gradient(90deg, #FFD700, #FFB300);
+  background: linear-gradient(90deg, #FFD700, #FF9100);
   border: none;
   color: black;
   font-weight: bold;
@@ -134,7 +154,7 @@ body {
 
 @keyframes glow {
   from { box-shadow: 0 0 10px #FFD700; }
-  to { box-shadow: 0 0 25px #FFB300; }
+  to { box-shadow: 0 0 25px #FF9100; }
 }
 
 .popup {
@@ -155,7 +175,7 @@ body {
   padding: 20px;
   text-align: center;
   width: 300px;
-  box-shadow: 0 0 20px #FFB300;
+  box-shadow: 0 0 20px #FF9100;
 }
 
 .popup-content input, .popup-content textarea {
@@ -171,6 +191,12 @@ body {
 .hidden { display: none; }
 .active { display: block; }
 
-.logout {
-  color: red;
+/* Animasi Blink untuk DASHBOARD SCPD */
+@keyframes blinkGold {
+  from {
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FF9100, 0 0 30px #FFD700;
+  }
+  to {
+    text-shadow: 0 0 20px #FFB300, 0 0 40px #FFD700, 0 0 60px #FF9100;
+  }
 }
