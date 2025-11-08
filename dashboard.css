@@ -1,11 +1,155 @@
+/* =============================
+   GLOBAL
+============================= */
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* =============================
+   HEADER
+============================= */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 20, 20, 0.9);
+  padding: 20px;
+  box-shadow: 0 0 20px gold;
+  position: relative;
+}
+
+/* Tombol ☰ */
+.menu-icon {
+  position: absolute;
+  left: 25px;
+  font-size: 28px;
+  cursor: pointer;
+  color: gold;
+  transition: transform 0.2s;
+}
+.menu-icon:hover {
+  transform: scale(1.1);
+}
+
+/* Teks DASHBOARD */
+.neon-text {
+  background: linear-gradient(90deg, #ff9900, gold);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px gold, 0 0 20px orange;
+  cursor: pointer;
+  transition: text-shadow 0.3s;
+}
+.neon-text:hover {
+  text-shadow: 0 0 15px gold, 0 0 30px orange, 0 0 45px gold;
+}
+
+/* Tombol Logout */
+.logout-btn {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.logout-btn:hover {
+  background: gold;
+  color: black;
+  box-shadow: 0 0 15px gold;
+}
+
+/* =============================
+   SIDEBAR
+============================= */
+.sidebar {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background: rgba(15, 15, 15, 0.98);
+  box-shadow: 2px 0 20px gold;
+  transition: 0.4s;
+  padding-top: 80px;
+}
+.sidebar.active {
+  left: 0;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar li {
+  margin: 20px 0;
+}
+.sidebar a {
+  color: gold;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: all 0.3s;
+}
+.sidebar a:hover {
+  background: gold;
+  color: black;
+  box-shadow: 0 0 20px gold;
+}
+
+/* =============================
+   KONTEN UTAMA
+============================= */
+.main-content {
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tombol tambah produk di tengah */
+.center-add-btn {
+  background: linear-gradient(90deg, #ff9900, gold);
+  border: none;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 0 25px gold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.center-add-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px gold, 0 0 55px orange;
+}
+
+/* =============================
+   FORM TAMBAH PRODUK
+============================= */
 .product-form {
   text-align: center;
   background: rgba(20, 20, 20, 0.95);
   padding: 40px;
   border-radius: 15px;
   box-shadow: 0 0 20px gold;
+  width: 400px;
+  max-width: 90%;
 }
-.product-form input, .product-form textarea {
+.product-form input,
+.product-form textarea {
   display: block;
   margin: 10px auto;
   padding: 10px;
@@ -29,3 +173,69 @@
   transform: scale(1.05);
   box-shadow: 0 0 20px gold;
 }
+
+/* =============================
+   DAFTAR PRODUK (produk.html)
+============================= */
+.produk-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  padding: 30px;
+  width: 90%;
+  justify-items: center;
+}
+
+/* Kartu Produk */
+.produk-card {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid gold;
+  border-radius: 15px;
+  box-shadow: 0 0 20px gold;
+  overflow: hidden;
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.produk-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px gold;
+}
+
+/* Gambar Produk */
+.produk-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Info Produk */
+.produk-info {
+  padding: 15px;
+}
+.produk-info h3 {
+  margin: 0;
+  font-size: 20px;
+  color: gold;
+}
+.produk-info p {
+  margin-top: 8px;
+  font-size: 14px;
+  color: #ddd;
+  text-align: justify;
+}
+
+/* Bagian bawah kartu: harga dan tombol beli */
+.produk-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-top: 1px solid gold;
+}
+.harga {
+  color: gold;
+  fon
