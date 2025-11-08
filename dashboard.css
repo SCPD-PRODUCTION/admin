@@ -1,0 +1,93 @@
+body {
+  margin: 0;
+  font-family: 'Orbitron', sans-serif;
+  background: radial-gradient(circle at top, #000, #111);
+  color: #FFD700;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 30px;
+  background: linear-gradient(90deg, #111, #222);
+  border-bottom: 2px solid #FFD700;
+  box-shadow: 0 0 15px #FFD700;
+}
+
+.neon-text {
+  color: #FFD700;
+  text-shadow: 0 0 5px #FFD700, 0 0 20px #FFD700;
+  animation: neonGlow 1.5s infinite alternate;
+}
+
+@keyframes neonGlow {
+  from { text-shadow: 0 0 10px #FFD700; }
+  to { text-shadow: 0 0 25px #FFD700; }
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -260px;
+  width: 240px;
+  height: 100%;
+  background: #111;
+  border-right: 2px solid #FFD700;
+  transition: left 0.3s ease;
+  z-index: 99;
+}
+
+.sidebar.active { left: 0; }
+.sidebar ul { list-style: none; padding: 0; margin: 0; }
+.sidebar ul li {
+  padding: 15px 20px;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+}
+.sidebar ul li:hover { background: #222; }
+
+.menu-toggle {
+  cursor: pointer;
+  font-size: 1.5em;
+  color: #FFD700;
+}
+
+.section { display: none; padding: 20px; }
+.section.active { display: block; }
+
+.produk-grid {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+}
+
+.produk-card {
+  min-width: 180px;
+  background: #222;
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 15px #FFD700;
+}
+
+.tambah-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background: #FFD700;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  box-shadow: 0 0 20px #FFD700;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  from { box-shadow: 0 0 10px #FFD700; }
+  to { box-shadow: 0 0 30px #FFD700; }
+}
