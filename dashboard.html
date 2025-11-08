@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard SCPD</title>
-  <link rel="stylesheet" href="dashboard.css" />
-  <script type="module" src="dashboard.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DASHBOARD SCPD</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script type="module" src="dashboard.js" defer></script>
 </head>
-<body class="dashboard-body">
+<body>
+  <!-- Header -->
   <header class="header">
-    <div class="menu-toggle" id="menuToggle">☰</div>
-    <h1 class="neon-text">DASHBOARD SCPD</h1>
+    <div class="menu-toggle" id="menuToggle">&#9776;</div>
+    <h1 class="title">DASHBOARD SCPD</h1>
   </header>
 
-  <nav class="sidebar" id="sidebar">
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
     <ul>
-      <li onclick="showSection('produk')">📸 Kelola Produk</li>
-      <li onclick="showSection('analitik')">📊 Analitik Konten</li>
-      <li onclick="showSection('aktivitas')">📈 Aktivitas Admin</li>
-      <li onclick="logout()">🚪 Logout</li>
+      <li><a href="#" id="menu-produk">📸 Kelola Produk</a></li>
+      <li><a href="#" id="menu-analitik">📊 Analitik Konten</a></li>
+      <li><a href="#" id="menu-aktivitas">📈 Aktivitas Admin</a></li>
+      <li><button id="logoutBtn" class="logout">🚪 Logout</button></li>
     </ul>
-  </nav>
+  </aside>
 
-  <main id="main-content">
-    <section id="produk" class="section active">
-      <div class="produk-grid" id="produkGrid"></div>
-      <button class="tambah-btn" id="tambahProduk">+ Tambah Produk</button>
+  <!-- Konten -->
+  <main class="content" id="content">
+    <section id="produk-section" class="active">
+      <div class="produk-container" id="produk-container"></div>
+      <button id="tambah-produk" class="btn-tambah">+ Tambah Produk</button>
     </section>
 
-    <section id="analitik" class="section">
+    <section id="analitik-section" class="hidden">
       <canvas id="chartKonten"></canvas>
     </section>
 
-    <section id="aktivitas" class="section">
+    <section id="aktivitas-section" class="hidden">
       <canvas id="chartAktivitas"></canvas>
     </section>
   </main>
 
-  <div class="popup" id="popupForm">
+  <!-- Popup tambah produk -->
+  <div class="popup hidden" id="popupForm">
     <div class="popup-content">
       <h2>Tambah Produk</h2>
-      <input type="text" id="judul" placeholder="Judul Produk" />
-      <input type="text" id="deskripsi" placeholder="Deskripsi" />
-      <input type="number" id="harga" placeholder="Harga" />
-      <input type="file" id="foto" />
+      <input type="file" id="foto" accept="image/*">
+      <input type="text" id="judul" placeholder="Judul Produk">
+      <textarea id="deskripsi" placeholder="Deskripsi"></textarea>
+      <input type="number" id="harga" placeholder="Harga">
       <button id="simpanProduk">Simpan</button>
-      <button onclick="closePopup()">Batal</button>
+      <button id="batalPopup">Batal</button>
     </div>
   </div>
 </body>
