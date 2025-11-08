@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daftar Produk</title>
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
   <header class="header">
@@ -12,7 +12,7 @@
     <button onclick="window.location.href='dashboard.html'" class="logout-btn">Kembali</button>
   </header>
 
-  <main class="main-content" style="flex-direction: column; align-items: center;">
+  <main class="main-content" id="mainContent" style="flex-direction: column; align-items: center;">
     <div id="sliderArea"></div>
     <button id="lihatSemuaBtn" class="lihat-semua-btn" style="display: none;">Lihat Semua Produk</button>
   </main>
@@ -21,9 +21,11 @@
     const produkList = JSON.parse(localStorage.getItem("produkList")) || [];
     const sliderArea = document.getElementById("sliderArea");
     const lihatSemuaBtn = document.getElementById("lihatSemuaBtn");
-    const LINK_WA = "https://wa.me/message/ABCDEF123XYZ"; // ganti ke link wame kamu
+    const mainContent = document.getElementById("mainContent");
 
-    // fungsi buat kartu produk
+    // 🔗 Ganti dengan link WAME kamu
+    const LINK_WA = "https://wa.me/message/ABCDEF123XYZ";
+
     function buatKartu(produk) {
       const card = document.createElement("div");
       card.classList.add("produk-card");
@@ -34,66 +36,84 @@
           <p>${produk.deskripsi}</p>
         </div>
         <div class="produk-footer">
-          <span class="harga">Rp ${produk.harga ? produk.harga.toLocaleString('id-ID') : '-'}</span>
+          <span class="harga">Rp ${produk.harga ? produk.harga.toLocaleString("id-ID") : "-"}</span>
           <a href="${LINK_WA}?text=${encodeURIComponent(
-            `Halo, saya ingin membeli produk ${produk.nama} seharga Rp ${produk.harga?.toLocaleString('id-ID') || '-'}`
-          )}" target="_blank" class="beli-btn">Beli</a>
+        `Halo, saya ingin membeli produk ${produk.nama} seharga Rp ${produk.harga?.toLocaleString("id-ID") || "-"}`
+      )}" target="_blank" class="beli-btn">Beli</a>
         </div>
       `;
       return card;
     }
 
-    // tampilkan hingga 5 baris slider
-    if (produkList.length === 0) {
-      sliderArea.innerHTML = "<p>Tidak ada produk yang tersimpan.</p>";
-    } else {
-      const maxBaris = 5;
+    // fungsi menampilkan produk per baris dengan slider
+    function tampilkanBarisProduk(produkData) {
+      const sliderWrapper = document.createElement("div");
+      sliderWrapper.classList.add("produk-slider-container");
+      sliderWrapper.innerHTML = `
+        <button class="slider-btn prevBtn">⬅</button>
+        <div class="produk-container horizontal-scroll fade-in"></div>
+        <button class="slider-btn nextBtn">➡</button>
+      `;
+      const container = sliderWrapper.querySelector(".produk-container");
+
+      produkData.forEach((p) => container.appendChild(buatKartu(p)));
+      sliderArea.appendChild(sliderWrapper);
+
+      const scrollAmount = 5 * 320;
+      sliderWrapper.querySelector(".nextBtn").addEventListener("click", () => {
+        container.scrollBy({ left: scrollAmount, behavior: "smooth" });
+      });
+      sliderWrapper.querySelector(".prevBtn").addEventListener("click", () => {
+        container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+      });
+    }
+
+    // tampilkan 5 baris pertama
+    function tampilkanAwal() {
+      if (produkList.length === 0) {
+        sliderArea.innerHTML = "<p>Tidak ada produk yang tersimpan.</p>";
+        return;
+      }
+
       const produkPerBaris = 20;
       const totalBaris = Math.ceil(produkList.length / produkPerBaris);
+      const barisAwal = Math.min(totalBaris, 5);
 
-      for (let i = 0; i < Math.min(totalBaris, maxBaris); i++) {
+      sliderArea.innerHTML = "";
+      for (let i = 0; i < barisAwal; i++) {
         const start = i * produkPerBaris;
         const end = start + produkPerBaris;
-        const barisProduk = produkList.slice(start, end);
-
-        const sliderWrapper = document.createElement("div");
-        sliderWrapper.classList.add("produk-slider-container");
-        sliderWrapper.innerHTML = `
-          <button class="slider-btn prevBtn">⬅</button>
-          <div class="produk-container horizontal-scroll"></div>
-          <button class="slider-btn nextBtn">➡</button>
-        `;
-        const container = sliderWrapper.querySelector(".produk-container");
-
-        barisProduk.forEach((p) => container.appendChild(buatKartu(p)));
-        sliderArea.appendChild(sliderWrapper);
-
-        const scrollAmount = 5 * 320;
-        sliderWrapper.querySelector(".nextBtn").addEventListener("click", () => {
-          container.scrollBy({ left: scrollAmount, behavior: "smooth" });
-        });
-        sliderWrapper.querySelector(".prevBtn").addEventListener("click", () => {
-          container.scrollBy({ left: -scrollAmount, behavior: "smooth" });
-        });
+        tampilkanBarisProduk(produkList.slice(start, end));
       }
 
-      // kalau lebih dari 100 produk (5x20), tampilkan tombol lihat semua
-      if (produkList.length > maxBaris * produkPerBaris) {
+      // tampilkan tombol jika masih ada produk di bawah
+      if (totalBaris > 5) {
         lihatSemuaBtn.style.display = "block";
-        lihatSemuaBtn.addEventListener("click", tampilkanSemuaProduk);
       }
     }
 
-    // fungsi menampilkan semua produk tanpa batas
-    function tampilkanSemuaProduk() {
-      sliderArea.innerHTML = "";
-      lihatSemuaBtn.style.display = "none";
+    // tombol lihat semua: ubah seluruh tampilan jadi semua baris produk
+    function tampilkanSemua() {
+      mainContent.classList.add("fade-out");
 
-      const grid = document.createElement("div");
-      grid.classList.add("produk-container");
-      produkList.forEach((p) => grid.appendChild(buatKartu(p)));
-      sliderArea.appendChild(grid);
+      setTimeout(() => {
+        sliderArea.innerHTML = "";
+        lihatSemuaBtn.style.display = "none";
+        mainContent.classList.remove("fade-out");
+
+        const produkPerBaris = 20;
+        const totalBaris = Math.ceil(produkList.length / produkPerBaris);
+
+        for (let i = 0; i < totalBaris; i++) {
+          const start = i * produkPerBaris;
+          const end = start + produkPerBaris;
+          tampilkanBarisProduk(produkList.slice(start, end));
+        }
+      }, 400);
     }
+
+    lihatSemuaBtn.addEventListener("click", tampilkanSemua);
+    tampilkanAwal();
   </script>
 </body>
 </html>
