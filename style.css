@@ -1,4 +1,3 @@
-/* Reset & Font */
 body, html {
   margin: 0;
   padding: 0;
@@ -8,7 +7,6 @@ body, html {
   min-height: 100vh;
 }
 
-/* Blink effect gold */
 .blink {
   animation: blink 2s infinite;
 }
@@ -17,7 +15,6 @@ body, html {
   25%,75% { opacity:0.4; }
 }
 
-/* Login Page */
 .login-page {
   display: flex;
   flex-direction: column;
@@ -47,7 +44,6 @@ body, html {
   margin-top:10px;
 }
 
-/* Dashboard */
 .dashboard {
   max-width: 800px;
   margin: 20px auto;
@@ -91,7 +87,6 @@ body, html {
   box-shadow:0 0 10px #f5d000,0 0 20px #f5d000;
 }
 
-/* Product List */
 .products-list {
   display: grid;
   grid-template-columns: repeat(auto-fill,minmax(200px,1fr));
