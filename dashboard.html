@@ -1,57 +1,30 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SCPD Dashboard</title>
-  <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
-  <!-- Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <h2>SCPD</h2>
-    <a href="#" class="active">Dashboard</a>
-    <a href="#">Produk</a>
-    <a href="#">Statistik</a>
-    <a href="#">Pengaturan</a>
-  </div>
-
-  <!-- Header -->
-  <div class="header">
-    <div class="menu-icon" id="menuBtn">☰</div>
-    <h1 id="dashboardTitle">Dashboard</h1>
+  <header class="header">
+    <div class="menu-icon" id="menuToggle">☰</div>
+    <h1 id="dashboardTitle" class="neon-text">DASHBOARD</h1>
     <button id="logoutBtn" class="logout-btn">Logout</button>
-  </div>
+  </header>
 
-  <!-- Kontainer Produk -->
-  <div class="main-content">
-    <div class="products-container" id="productsContainer">
-      <!-- Produk akan muncul di sini dari Firestore -->
-    </div>
+  <aside id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="#" id="addProductBtn">Tambah Produk</a></li>
+      <li><a href="#">Data Analitik Produk</a></li>
+      <li><a href="#">Aktivitas Admin</a></li>
+    </ul>
+  </aside>
 
-    <!-- Navigasi -->
-    <div class="navigation-buttons">
-      <button id="prevBtn">⬅️</button>
-      <button id="nextBtn">➡️</button>
-    </div>
+  <main class="main-content">
+    <button id="centerAddProduct" class="center-add-btn">+ Tambah Produk</button>
+  </main>
 
-    <!-- Tombol Tambah Produk -->
-    <button id="addProductBtn" class="add-product-btn">＋ Tambah Produk</button>
-  </div>
-
-  <!-- Popup Modal Tambah Produk -->
-  <div id="productModal" class="modal">
-    <div class="modal-content">
-      <h2>Tambah Produk</h2>
-      <input type="file" id="productImage" accept="image/*">
-      <input type="text" id="productTitle" placeholder="Judul Produk">
-      <textarea id="productDescription" placeholder="Deskripsi Produk"></textarea>
-      <input type="number" id="productPrice" placeholder="Harga Produk">
-      <button id="saveProductBtn">Simpan</button>
-      <button id="closeModalBtn">Tutup</button>
-    </div>
-  </div>
-
-  <script type="module" src="dashboard.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
