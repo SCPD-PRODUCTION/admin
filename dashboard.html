@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Dashboard | SCPD</title>
-<link rel="stylesheet" href="dashboard.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | SCPD</title>
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
-<body class="dashboard-body">
-  <header class="dashboard-header">
-    <button id="menuToggle" class="menu-btn">☰</button>
+<body>
+  <header class="header">
+    <button id="menuBtn" class="menu-btn">☰</button>
     <h1 class="dashboard-title">DASHBOARD</h1>
     <button id="logoutBtn" class="logout-btn">Logout</button>
   </header>
 
-  <aside id="sidebar" class="sidebar hidden">
-    <ul>
-      <li id="menu-products">Kelola Produk</li>
-      <li id="menu-analytics1">Analitik Konten</li>
-      <li id="menu-analytics2">Aktivitas Admin</li>
-    </ul>
-  </aside>
-
-  <main id="content" class="dashboard-content">
-    <div class="product-header">
-      <h2>Kelola Produk</h2>
-      <button id="addProductBtn" class="add-btn">+ Tambah Produk</button>
-    </div>
-    <div id="productContainer" class="product-container"></div>
+  <main class="main-content">
+    <h2>Kelola Produk</h2>
+    <button id="addProductBtn" class="add-btn">+ Tambah Produk</button>
   </main>
 
   <script type="module" src="dashboard.js"></script>
