@@ -78,8 +78,5 @@ addProductForm.addEventListener("submit", async (e) => {
     alert("Produk berhasil ditambahkan!");
     modal.style.display = "none";
     addProductForm.reset();
-  } catch (error) {
-    console.error("Error menambah produk:", error);
-    alert("Gagal menambah produk. Cek konsol untuk detail.");
   }
 });
