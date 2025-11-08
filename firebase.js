@@ -1,4 +1,7 @@
 // ==== FIREBASE CONFIG ====
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
 const firebaseConfig = {
   apiKey: "AIzaSyC5gAbdlbVL3t6oreb_ZZhAUT1YJVTKwPU",
   authDomain: "scpd-production.firebaseapp.com",
@@ -11,21 +14,25 @@ const firebaseConfig = {
 };
 
 // ==== INISIALISASI FIREBASE ====
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({ prompt: "select_account" });
 
 // ==== LOGIN GOOGLE ====
-function loginWithGoogle() {
-  const provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: "select_account" });
-
-  auth.signInWithPopup(provider)
+export function loginWithGoogle() {
+  signInWithPopup(auth, provider)
     .then((result) => {
-      console.log("Login berhasil:", result.user);
+      const user = result.user;
+      console.log("Login berhasil:", user);
+
+      // simpan data user ke localStorage
       localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("userEmail", result.user.email);
-      localStorage.setItem("userName", result.user.displayName);
-      localStorage.setItem("userPhoto", result.user.photoURL);
+      localStorage.setItem("userEmail", user.email);
+      localStorage.setItem("userName", user.displayName);
+      localStorage.setItem("userPhoto", user.photoURL);
+
+      alert("Login berhasil sebagai: " + user.email);
       window.location.href = "dashboard.html";
     })
     .catch((error) => {
@@ -34,11 +41,33 @@ function loginWithGoogle() {
     });
 }
 
-// ==== CEK STATUS LOGIN (untuk dashboard) ====
-auth.onAuthStateChanged((user) => {
+// ==== CEK STATUS LOGIN ====
+onAuthStateChanged(auth, (user) => {
+  const currentPage = window.location.pathname.split("/").pop();
+
   if (user) {
     console.log("Sudah login:", user.email);
+
+    if (currentPage === "index.html" || currentPage === "") {
+      window.location.href = "dashboard.html";
+    }
   } else {
     console.log("Belum login");
+
+    if (currentPage === "dashboard.html") {
+      window.location.href = "index.html";
+    }
   }
 });
+
+// ==== LOGOUT ====
+export function logout() {
+  signOut(auth)
+    .then(() => {
+      localStorage.clear();
+      window.location.href = "index.html";
+    })
+    .catch((error) => {
+      console.error("Gagal logout:", error);
+    });
+}
