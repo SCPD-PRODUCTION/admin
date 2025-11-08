@@ -1,25 +1,107 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login Admin SCPD</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCPD Dashboard</title>
+  <link rel="stylesheet" href="dashboard.css" />
 </head>
 <body>
-<div class="login-container">
-    <h1 class="title blink">SCPD ADMIN</h1>
-    <button id="googleLoginBtn" class="btn">Login dengan Google</button>
-</div>
+  <header class="header">
+    <div class="menu-icon" id="menuToggle">☰</div>
+    <h1 id="dashboardTitle" class="neon-text">DASHBOARD</h1>
+    <button id="logoutBtn" class="logout-btn">Logout</button>
+  </header>
 
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
-<script src="firebase.js"></script>
-<script>
-document.getElementById('googleLoginBtn').addEventListener('click', () => {
-    loginWithGoogle();
-});
-</script>
+  <aside id="sidebar" class="sidebar">
+    <ul>
+      <li><a href="#" id="addProductBtn">Tambah Produk</a></li>
+      <li><a href="#">Data Analitik Produk</a></li>
+      <li><a href="#">Aktivitas Admin</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <button id="centerAddProduct" class="center-add-btn">+ Tambah Produk</button>
+  </main>
+
+  <!-- Script utama dashboard -->
+  <script src="dashboard.js"></script>
+
+  <!-- Firebase (ES Module) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-storage.js";
+
+    // 🔧 Ganti dengan konfigurasi Firebase kamu sendiri
+    const firebaseConfig = {
+      apiKey: "API_KEY_KAMU",
+      authDomain: "PROJECT_ID.firebaseapp.com",
+      projectId: "PROJECT_ID",
+      storageBucket: "PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    // Inisialisasi Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    // === Form Tambah Produk ===
+    document.addEventListener("DOMContentLoaded", () => {
+      const addProductBtn = document.getElementById("addProductBtn");
+      const centerAddProduct = document.getElementById("centerAddProduct");
+
+      function showAddProductForm() {
+        const formHTML = `
+          <div class="product-form">
+            <h2>Tambah Produk</h2>
+            <input type="text" id="productName" placeholder="Nama Produk" required><br>
+            <input type="number" id="productPrice" placeholder="Harga Produk" required><br>
+            <input type="file" id="productImage" accept="image/*" required><br>
+            <button id="saveProduct">Simpan</button>
+          </div>
+        `;
+        document.querySelector(".main-content").innerHTML = formHTML;
+
+        document.getElementById("saveProduct").addEventListener("click", async () => {
+          const name = document.getElementById("productName").value;
+          const price = document.getElementById("productPrice").value;
+          const file = document.getElementById("productImage").files[0];
+
+          if (!name || !price || !file) {
+            alert("Semua kolom wajib diisi!");
+            return;
+          }
+
+          try {
+            // Upload gambar ke Storage
+            const storageRef = ref(storage, "produk/" + file.name);
+            await uploadBytes(storageRef, file);
+            const imageUrl = await getDownloadURL(storageRef);
+
+            // Simpan data ke Firestore
+            await addDoc(collection(db, "produk"), {
+              nama: name,
+              harga: parseFloat(price),
+              gambar: imageUrl,
+              dibuat: new Date()
+            });
+
+            alert("Produk berhasil disimpan!");
+            window.location.reload();
+          } catch (error) {
+            console.error("Error menambah produk:", error);
+            alert("Gagal menambah produk.");
+          }
+        });
+      }
+
+      addProductBtn.addEventListener("click", showAddProductForm);
+      centerAddProduct.addEventListener("click", showAddProductForm);
+    });
+  </script>
 </body>
 </html>
