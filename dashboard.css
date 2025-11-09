@@ -115,7 +115,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   min-height: calc(100vh - 100px);
-  overflow-y: auto;          /* biar bisa scroll */
+  overflow-y: auto;
   padding: 40px 20px;
   box-sizing: border-box;
 }
@@ -246,7 +246,11 @@ body {
   font-size: 16px;
 }
 
-/* Tombol beli warna khas WhatsApp */
+/* =============================
+   Tombol Aksi Produk
+============================= */
+
+/* Tombol beli (WhatsApp) */
 .beli-btn {
   background: linear-gradient(90deg, #25d366, #128c7e);
   color: white;
@@ -259,6 +263,25 @@ body {
 .beli-btn:hover {
   transform: scale(1.1);
   box-shadow: 0 0 15px #25d366;
+}
+
+/* Tombol hapus produk (ikon tong sampah) */
+.hapus-btn {
+  background: transparent;
+  border: 2px solid #ff5555;
+  color: #ff5555;
+  font-size: 16px;
+  margin-left: 8px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.hapus-btn:hover {
+  background: #ff5555;
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #ff4444, 0 0 25px #ff6666;
 }
 
 /* =============================
@@ -349,10 +372,22 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes fadeOut {
-  from { opacity: 1; transform: translateY(0); }
-  to { opacity: 0; transform: translateY(20px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
 }
