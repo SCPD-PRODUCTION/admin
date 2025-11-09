@@ -1,4 +1,31 @@
 // =============================
+// 🔹 Sidebar toggle
+// =============================
+const menuToggle = document.getElementById("menuToggle");
+const sidebar = document.getElementById("sidebar");
+menuToggle.addEventListener("click", () => {
+  sidebar.classList.toggle("active");
+});
+
+// =============================
+// 🔹 Tombol Logout
+// =============================
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  localStorage.clear();
+  window.location.href = "index.html";
+});
+
+// =============================
+// 🔹 Klik judul DASHBOARD
+// =============================
+const dashboardTitle = document.getElementById("dashboardTitle");
+dashboardTitle.addEventListener("click", () => {
+  window.location.href = "dashboard.html"; // reload dashboard utama
+});
+
+// =============================
 // 🔹 Firebase Import (v9 Modular)
 // =============================
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
