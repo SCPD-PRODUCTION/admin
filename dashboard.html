@@ -18,8 +18,10 @@
     <ul>
       <li><a href="#" id="addProductBtn">Tambah Produk</a></li>
       <li><a href="#" id="viewProductsBtn">Daftar Produk</a></li>
-      <li><a href="#">Data Analitik Produk</a></li>
-      <li><a href="#">Aktivitas Admin</a></li>
+      <li><a href="#" id="analyticsBtn">Data Analitik Produk</a></li>
+      <li><a href="#" id="activityBtn">Aktivitas Admin</a></li>
+      <li><a href="#" id="favoriteBtn">Produk Favorit</a></li>
+      <li><a href="dashboard.html" id="dashboardBtn">Dashboard</a></li>
     </ul>
   </aside>
 
@@ -27,20 +29,38 @@
     <button id="centerAddProduct" class="center-add-btn">+ Tambah Produk</button>
     <button id="centerViewProducts" class="center-add-btn">Lihat Daftar Produk</button>
 
-    <!-- Kontainer Produk -->
     <div class="produk-slider-container">
-      <!-- Tombol Kiri -->
       <button class="slider-btn prevBtn">&#8592;</button>
       
-      <div class="produk-container horizontal-scroll">
-        <!-- Produk akan di-render di sini -->
-      </div>
+      <div class="produk-container horizontal-scroll"></div>
 
-      <!-- Tombol Kanan -->
       <button class="slider-btn nextBtn">&#8594;</button>
     </div>
   </main>
 
-  <script src="dashboard.js"></script>
+  <!-- Modal Tambah Produk -->
+  <div id="productModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Tambah Produk</h2>
+      <form id="productForm">
+        <label for="productTitle">Judul Produk</label>
+        <input type="text" id="productTitle" required>
+
+        <label for="productDesc">Deskripsi</label>
+        <textarea id="productDesc" required></textarea>
+
+        <label for="productPrice">Harga</label>
+        <input type="number" id="productPrice" required>
+
+        <label for="productImg">URL Foto</label>
+        <input type="text" id="productImg" required>
+
+        <img id="previewImg" src="" alt="Preview Foto" style="max-width:150px; display:none; margin-bottom:10px;">
+
+        <button type="submit">Simpan Produk</button>
+      </form>
+    </div>
+  </div>
 </body>
 </html>
