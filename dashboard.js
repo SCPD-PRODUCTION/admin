@@ -153,7 +153,7 @@ async function showProductList() {
         <div class="produk-footer">
           <span class="harga">Rp ${data.harga}</span>
           <div class="produk-actions">
-            <a href="https://wa.me/6281234567890" target="_blank" class="beli-btn">Beli</a>
+            <a href="https://wa.link/xo29yr" target="_blank" class="beli-btn">Beli</a>
             <!-- Tombol Hapus Produk -->
             <button class="hapus-btn" title="Hapus Produk"><i class="fas fa-trash"></i></button>
           </div>
