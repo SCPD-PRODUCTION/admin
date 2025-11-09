@@ -54,50 +54,72 @@ productImgInput.addEventListener("change", () => {
   }
 });
 
-// Simpan Produk
-productForm.addEventListener("submit", e => {
+// ===== Simpan Produk (Local + GitHub Backend) =====
+productForm.addEventListener("submit", async e => {
   e.preventDefault();
   const judul = document.getElementById("productTitle").value;
   const deskripsi = document.getElementById("productDesc").value;
   const harga = document.getElementById("productPrice").value;
   const foto = selectedImage;
 
+  // Simpan lokal
   produkData.push({judul, deskripsi, harga, foto});
   localStorage.setItem("produkData", JSON.stringify(produkData));
   renderProduk();
+
+  // Kirim ke backend GitHub
+  try {
+    const res = await fetch("http://localhost:3000/add-product", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ judul, deskripsi, harga, foto })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+      alert("✅ Produk berhasil disimpan ke GitHub!");
+    } else {
+      alert("⚠️ Gagal menyimpan produk ke GitHub.");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("❌ Terjadi kesalahan koneksi ke server GitHub backend.");
+  }
+
+  // Reset form
   productForm.reset();
   previewImg.style.display = "none";
   selectedImage = "";
   modal.style.display = "none";
 });
 
-// Hapus Produk
+// ===== Hapus Produk =====
 window.hapusProduk = function(i){
   produkData.splice(i,1);
   localStorage.setItem("produkData", JSON.stringify(produkData));
   renderProduk();
 }
 
-// Sidebar toggle
+// ===== Sidebar Toggle =====
 const sidebar = document.getElementById("sidebar");
 document.getElementById("menuToggle").addEventListener("click", () => {
   sidebar.style.left = sidebar.style.left === "0px" ? "-250px" : "0px";
 });
 
-// Slider tombol
+// ===== Slider Tombol =====
 document.querySelector(".prevBtn").addEventListener("click", () => produkContainer.scrollBy({left:-200,behavior:'smooth'}));
 document.querySelector(".nextBtn").addEventListener("click", () => produkContainer.scrollBy({left:200,behavior:'smooth'}));
 
-// Logout
+// ===== Logout =====
 document.getElementById("logoutBtn").addEventListener("click", () => window.location.href = "index.html");
 
-// Sidebar menu placeholder
+// ===== Sidebar Menu Placeholder =====
 document.getElementById("analyticsBtn").addEventListener("click", () => alert("Fitur Analitik sedang dikembangkan."));
 document.getElementById("activityBtn").addEventListener("click", () => alert("Fitur Aktivitas sedang dikembangkan."));
 document.getElementById("favoriteBtn").addEventListener("click", () => alert("Fitur Produk Favorit sedang dikembangkan."));
 
-// Lihat produk
+// ===== Lihat Produk =====
 document.getElementById("centerViewProducts").addEventListener("click", renderProduk);
 
-// Render produk saat load
+// ===== Render produk saat load =====
 renderProduk();
