@@ -29,18 +29,29 @@ const closeModalBtn = document.querySelector(".close-btn");
 const productForm = document.getElementById("productForm");
 const previewImg = document.getElementById("previewImg");
 const productImgInput = document.getElementById("productImg");
+let selectedImage = "";
 
 // Buka modal
 openModalBtns.forEach(btn => btn.addEventListener("click", () => modal.style.display = "block"));
 // Tutup modal
 closeModalBtn.addEventListener("click", () => modal.style.display = "none");
 window.addEventListener("click", e => { if(e.target == modal) modal.style.display = "none"; });
-// Preview gambar
-productImgInput.addEventListener("input", () => {
-  if(productImgInput.value){
-    previewImg.src = productImgInput.value;
-    previewImg.style.display = "block";
-  } else previewImg.style.display = "none";
+
+// Preview & convert ke base64
+productImgInput.addEventListener("change", () => {
+  const file = productImgInput.files[0];
+  if(file){
+    const reader = new FileReader();
+    reader.onload = e => {
+      selectedImage = e.target.result;
+      previewImg.src = selectedImage;
+      previewImg.style.display = "block";
+    };
+    reader.readAsDataURL(file);
+  } else {
+    previewImg.style.display = "none";
+    selectedImage = "";
+  }
 });
 
 // Simpan Produk
@@ -49,19 +60,20 @@ productForm.addEventListener("submit", e => {
   const judul = document.getElementById("productTitle").value;
   const deskripsi = document.getElementById("productDesc").value;
   const harga = document.getElementById("productPrice").value;
-  const foto = document.getElementById("productImg").value;
+  const foto = selectedImage;
 
   produkData.push({judul, deskripsi, harga, foto});
   localStorage.setItem("produkData", JSON.stringify(produkData));
   renderProduk();
   productForm.reset();
   previewImg.style.display = "none";
+  selectedImage = "";
   modal.style.display = "none";
 });
 
 // Hapus Produk
 window.hapusProduk = function(i){
-  produkData.splice(i, 1);
+  produkData.splice(i,1);
   localStorage.setItem("produkData", JSON.stringify(produkData));
   renderProduk();
 }
@@ -73,8 +85,8 @@ document.getElementById("menuToggle").addEventListener("click", () => {
 });
 
 // Slider tombol
-document.querySelector(".prevBtn").addEventListener("click", () => produkContainer.scrollBy({left: -200, behavior: 'smooth'}));
-document.querySelector(".nextBtn").addEventListener("click", () => produkContainer.scrollBy({left: 200, behavior: 'smooth'}));
+document.querySelector(".prevBtn").addEventListener("click", () => produkContainer.scrollBy({left:-200,behavior:'smooth'}));
+document.querySelector(".nextBtn").addEventListener("click", () => produkContainer.scrollBy({left:200,behavior:'smooth'}));
 
 // Logout
 document.getElementById("logoutBtn").addEventListener("click", () => window.location.href = "index.html");
