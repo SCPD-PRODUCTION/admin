@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SCPD Dashboard</title>
   <link rel="stylesheet" href="dashboard.css" />
-  <!-- Ikon Font Awesome -->
-  <script src="https://kit.fontawesome.com/a2d0b7b123.js" crossorigin="anonymous"></script>
+  <script type="module" src="dashboard.js"></script>
 </head>
 <body>
   <header class="header">
@@ -27,157 +26,21 @@
   <main class="main-content">
     <button id="centerAddProduct" class="center-add-btn">+ Tambah Produk</button>
     <button id="centerViewProducts" class="center-add-btn">Lihat Daftar Produk</button>
+
+    <!-- Kontainer Produk -->
+    <div class="produk-slider-container">
+      <!-- Tombol Kiri -->
+      <button class="slider-btn prevBtn">&#8592;</button>
+      
+      <div class="produk-container horizontal-scroll">
+        <!-- Produk akan di-render di sini -->
+      </div>
+
+      <!-- Tombol Kanan -->
+      <button class="slider-btn nextBtn">&#8594;</button>
+    </div>
   </main>
 
-  <!-- Firebase v9.23.0 -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-    import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
-
-    // ==== Firebase Config ====
-    const firebaseConfig = {
-      apiKey: "AIzaSyC5gAbdlbVL3t6oreb_ZZhAUT1YJVTKwPU",
-      authDomain: "scpd-production.firebaseapp.com",
-      databaseURL: "https://scpd-production-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "scpd-production",
-      storageBucket: "scpd-production.appspot.com",
-      messagingSenderId: "72136560829",
-      appId: "1:72136560829:web:1c14d8087f9c3b88ade7d4",
-      measurementId: "G-LGXCFVNFTH"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const storage = getStorage(app);
-
-    // === Proteksi login ===
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "index.html";
-      } else {
-        document.getElementById("dashboardTitle").textContent = `DASHBOARD - ${user.displayName}`;
-      }
-    });
-
-    // === Tombol logout ===
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      await signOut(auth);
-      localStorage.clear();
-      window.location.href = "index.html";
-    });
-
-    // === Event tombol ===
-    document.getElementById("addProductBtn").addEventListener("click", showAddProductForm);
-    document.getElementById("centerAddProduct").addEventListener("click", showAddProductForm);
-    document.getElementById("viewProductsBtn").addEventListener("click", showProductList);
-    document.getElementById("centerViewProducts").addEventListener("click", showProductList);
-
-    // === Form Tambah Produk ===
-    function showAddProductForm() {
-      document.querySelector(".main-content").innerHTML = `
-        <div class="product-form fade-in">
-          <h2>Tambah Produk</h2>
-          <input type="text" id="productName" placeholder="Nama Produk" required>
-          <input type="number" id="productPrice" placeholder="Harga Produk" required>
-          <textarea id="productDesc" placeholder="Deskripsi Produk"></textarea>
-          <input type="file" id="productImage" accept="image/*" required>
-          <button id="saveProduct">Simpan</button>
-        </div>
-      `;
-
-      document.getElementById("saveProduct").addEventListener("click", async () => {
-        const name = document.getElementById("productName").value.trim();
-        const price = document.getElementById("productPrice").value;
-        const desc = document.getElementById("productDesc").value.trim();
-        const file = document.getElementById("productImage").files[0];
-        if (!name || !price || !file) return alert("Semua kolom wajib diisi!");
-
-        try {
-          const fileRef = ref(storage, `produk/${file.name}`);
-          await uploadBytes(fileRef, file);
-          const imageUrl = await getDownloadURL(fileRef);
-
-          await addDoc(collection(db, "produk"), {
-            nama: name,
-            harga: parseFloat(price),
-            deskripsi: desc,
-            gambar: imageUrl,
-            filePath: `produk/${file.name}`,
-            dibuat: new Date(),
-          });
-
-          alert("Produk berhasil disimpan!");
-          showProductList();
-        } catch (err) {
-          alert("Gagal menyimpan produk: " + err.message);
-        }
-      });
-    }
-
-    // === Daftar Produk ===
-    async function showProductList() {
-      document.querySelector(".main-content").innerHTML = `
-        <h2 style="color:gold; margin-bottom:20px;">Daftar Produk</h2>
-        <div class="produk-container" id="produkList"></div>
-      `;
-      const produkList = document.getElementById("produkList");
-      const querySnapshot = await getDocs(collection(db, "produk"));
-
-      if (querySnapshot.empty) {
-        produkList.innerHTML = `<p style="color:gray;">Belum ada produk</p>`;
-        return;
-      }
-
-      querySnapshot.forEach((docSnap) => {
-        const data = docSnap.data();
-        produkList.innerHTML += `
-          <div class="produk-card fade-in" data-id="${docSnap.id}" data-path="${data.filePath}">
-            <img src="${data.gambar}" alt="${data.nama}">
-            <div class="produk-info">
-              <h3>${data.nama}</h3>
-              <p>${data.deskripsi || ""}</p>
-            </div>
-            <div class="produk-footer">
-              <span class="harga">Rp ${data.harga}</span>
-              <div>
-                <a href="https://wa.me/6281234567890" target="_blank" class="beli-btn">Beli</a>
-                <button class="hapus-btn" title="Hapus Produk">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-      });
-
-      // === Hapus produk ===
-      document.querySelectorAll(".hapus-btn").forEach((btn) => {
-        btn.addEventListener("click", async (e) => {
-          const card = e.target.closest(".produk-card");
-          const id = card.getAttribute("data-id");
-          const path = card.getAttribute("data-path");
-
-          if (confirm("Yakin ingin menghapus produk ini?")) {
-            try {
-              await deleteDoc(doc(db, "produk", id));
-              if (path) {
-                const fileRef = ref(storage, path);
-                await deleteObject(fileRef);
-              }
-              card.remove();
-              alert("Produk berhasil dihapus!");
-            } catch (err) {
-              alert("Gagal menghapus: " + err.message);
-            }
-          }
-        });
-      });
-    }
-  </script>
-
-  <script type="module" src="dashboard.js"></script>
+  <script src="dashboard.js"></script>
 </body>
 </html>
