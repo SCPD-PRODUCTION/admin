@@ -1,0 +1,221 @@
+/* =============================
+   GLOBAL
+============================= */
+body {
+  margin: 0;
+  background: #000;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+}
+
+/* =============================
+   HEADER
+============================= */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(20, 20, 20, 0.9);
+  padding: 20px;
+  box-shadow: 0 0 20px gold;
+  position: relative;
+}
+
+.menu-icon {
+  position: absolute;
+  left: 25px;
+  font-size: 28px;
+  cursor: pointer;
+  color: gold;
+  transition: transform 0.2s;
+}
+.menu-icon:hover {
+  transform: scale(1.1);
+}
+
+.neon-text {
+  background: linear-gradient(90deg, #ff9900, gold);
+  -webkit-background-clip: text;
+  color: transparent;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-shadow: 0 0 10px gold, 0 0 20px orange;
+  cursor: pointer;
+  transition: text-shadow 0.3s;
+}
+.neon-text:hover {
+  text-shadow: 0 0 15px gold, 0 0 30px orange, 0 0 45px gold;
+}
+
+.logout-btn {
+  position: absolute;
+  right: 25px;
+  top: 20px;
+  background: transparent;
+  border: 2px solid gold;
+  color: gold;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+.logout-btn:hover {
+  background: gold;
+  color: black;
+  box-shadow: 0 0 15px gold;
+}
+
+/* =============================
+   SIDEBAR
+============================= */
+.sidebar {
+  position: fixed;
+  left: -250px;
+  top: 0;
+  height: 100%;
+  width: 250px;
+  background: rgba(15, 15, 15, 0.98);
+  box-shadow: 2px 0 20px gold;
+  transition: 0.4s;
+  padding-top: 80px;
+  z-index: 10;
+}
+.sidebar.active {
+  left: 0;
+}
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+.sidebar li {
+  margin: 20px 0;
+}
+.sidebar a {
+  color: gold;
+  text-decoration: none;
+  padding: 10px 20px;
+  display: block;
+  transition: all 0.3s;
+}
+.sidebar a:hover {
+  background: gold;
+  color: black;
+  box-shadow: 0 0 20px gold;
+}
+
+/* =============================
+   PRODUK
+============================= */
+.produk-slider-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.produk-container {
+  display: flex;
+  gap: 25px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 20px;
+}
+
+.produk-card {
+  background: rgba(20, 20, 20, 0.95);
+  border: 1px solid gold;
+  border-radius: 15px;
+  box-shadow: 0 0 20px gold;
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.produk-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.produk-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  border-top: 1px solid gold;
+}
+
+.harga {
+  color: gold;
+  font-weight: bold;
+}
+
+.beli-btn {
+  background: linear-gradient(90deg, #25d366, #128c7e);
+  color: white;
+  text-decoration: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.beli-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #25d366;
+}
+
+.hapus-btn {
+  background: transparent;
+  border: 2px solid #ff5555;
+  color: #ff5555;
+  font-size: 16px;
+  margin-left: 8px;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.hapus-btn:hover {
+  background: #ff5555;
+  color: #000;
+  transform: scale(1.1);
+  box-shadow: 0 0 15px #ff4444, 0 0 25px #ff6666;
+}
+
+/* =============================
+   SLIDER PANAH KIRI/KANAN
+============================= */
+.slider-btn {
+  background: rgba(0, 0, 0, 0.6);
+  border: 2px solid gold;
+  color: gold;
+  font-size: 26px;
+  font-weight: bold;
+  width: 50px;
+  height: 80px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 5;
+}
+
+.slider-btn:hover {
+  background: gold;
+  color: black;
+  transform: scale(1.05);
+  box-shadow: 0 0 15px gold;
+}
+
+.prevBtn {
+  position: absolute;
+  left: -60px;
+}
+
+.nextBtn {
+  position: absolute;
+  right: -60px;
+}
