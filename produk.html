@@ -4,35 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Daftar Produk</title>
-  <link rel="stylesheet" href="dashboard.css" />
+  <link rel="stylesheet" href="produk.css" />
 </head>
 <body>
   <header class="header">
-    <div class="menu-icon" id="menuToggle">☰</div>
-    <h1 id="dashboardTitle" class="neon-text">DAFTAR PRODUK</h1>
-    <button id="logoutBtn" class="logout-btn">Logout</button>
+    <h1 class="neon-text">DAFTAR PRODUK</h1>
+    <a href="index.html" class="btn">Kembali</a>
   </header>
 
-  <aside id="sidebar" class="sidebar">
-    <ul>
-      <li><a href="dashboard.html">Dashboard</a></li>
-      <li><a href="#" id="addProductBtn">Tambah Produk</a></li>
-      <li><a href="#">Data Analitik Produk</a></li>
-    </ul>
-  </aside>
-
   <main class="main-content">
-    <div class="produk-slider-container">
-      <!-- Tombol Kiri -->
-      <button class="slider-btn prevBtn">&#8592;</button>
-      
-      <div class="produk-container horizontal-scroll" id="produkList"></div>
-      
-      <!-- Tombol Kanan -->
-      <button class="slider-btn nextBtn">&#8594;</button>
+    <div class="produk-container" id="produkList">
+      <!-- Produk akan muncul di sini secara otomatis -->
     </div>
   </main>
 
-  <script src="produk.js"></script> <!-- Skrip produk untuk mengambil data dari Firestore -->
+  <script type="module" src="produk.js"></script>
 </body>
 </html>
