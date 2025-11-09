@@ -1,393 +1,165 @@
-/* =============================
-   GLOBAL
-============================= */
 body {
   margin: 0;
-  background: #000;
-  color: #fff;
-  font-family: "Poppins", sans-serif;
-  overflow-x: hidden;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #111;
+  color: #eee;
 }
 
-/* =============================
-   HEADER
-============================= */
 .header {
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(20, 20, 20, 0.9);
-  padding: 20px;
-  box-shadow: 0 0 20px gold;
-  position: relative;
+  justify-content: space-between;
+  background-color: #222;
+  padding: 10px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 .menu-icon {
-  position: absolute;
-  left: 25px;
-  font-size: 28px;
+  font-size: 24px;
   cursor: pointer;
-  color: gold;
-  transition: transform 0.2s;
-}
-.menu-icon:hover {
-  transform: scale(1.1);
-}
-
-.neon-text {
-  background: linear-gradient(90deg, #ff9900, gold);
-  -webkit-background-clip: text;
-  color: transparent;
-  font-size: 28px;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px gold, 0 0 20px orange;
-  cursor: pointer;
-  transition: text-shadow 0.3s;
-}
-.neon-text:hover {
-  text-shadow: 0 0 15px gold, 0 0 30px orange, 0 0 45px gold;
 }
 
 .logout-btn {
-  position: absolute;
-  right: 25px;
-  top: 20px;
-  background: transparent;
-  border: 2px solid gold;
-  color: gold;
-  padding: 8px 16px;
-  border-radius: 8px;
+  background-color: #e74c3c;
+  border: none;
+  padding: 5px 10px;
+  color: #fff;
+  border-radius: 5px;
   cursor: pointer;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-.logout-btn:hover {
-  background: gold;
-  color: black;
-  box-shadow: 0 0 15px gold;
 }
 
-/* =============================
-   SIDEBAR
-============================= */
+.logout-btn:hover {
+  background-color: #c0392b;
+}
+
+.neon-text {
+  text-shadow: 0 0 5px #0ff, 0 0 10px #0ff, 0 0 20px #0ff, 0 0 40px #0ff;
+}
+
 .sidebar {
   position: fixed;
+  top: 60px;
   left: -250px;
-  top: 0;
-  height: 100%;
   width: 250px;
-  background: rgba(15, 15, 15, 0.98);
-  box-shadow: 2px 0 20px gold;
-  transition: 0.4s;
-  padding-top: 80px;
-  z-index: 10;
+  height: calc(100% - 60px);
+  background-color: #1a1a1a;
+  padding-top: 20px;
+  transition: left 0.3s ease;
+  z-index: 999;
 }
-.sidebar.active {
-  left: 0;
-}
+
 .sidebar ul {
   list-style: none;
   padding: 0;
 }
-.sidebar li {
-  margin: 20px 0;
-}
-.sidebar a {
-  color: gold;
+
+.sidebar ul li a {
+  display: block;
+  color: #eee;
   text-decoration: none;
   padding: 10px 20px;
-  display: block;
-  transition: all 0.3s;
-}
-.sidebar a:hover {
-  background: gold;
-  color: black;
-  box-shadow: 0 0 20px gold;
 }
 
-/* =============================
-   KONTEN UTAMA
-============================= */
+.sidebar ul li a:hover {
+  background-color: #333;
+}
+
 .main-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  min-height: calc(100vh - 100px);
-  overflow-y: auto;
-  padding: 40px 20px;
-  box-sizing: border-box;
+  margin-left: 0;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
 }
 
-/* Tombol tambah produk di tengah */
 .center-add-btn {
-  background: linear-gradient(90deg, #ff9900, gold);
+  display: inline-block;
+  padding: 10px 15px;
+  margin: 10px;
   border: none;
-  color: black;
-  font-size: 20px;
-  font-weight: bold;
-  padding: 20px 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 25px gold;
+  border-radius: 5px;
+  background-color: #0ff;
+  color: #111;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  margin-bottom: 30px;
-}
-.center-add-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 35px gold, 0 0 55px orange;
 }
 
-/* =============================
-   FORM TAMBAH PRODUK
-============================= */
-.product-form {
-  text-align: center;
-  background: rgba(20, 20, 20, 0.95);
-  padding: 40px;
-  border-radius: 15px;
-  box-shadow: 0 0 20px gold;
-  width: 400px;
-  max-width: 90%;
-}
-.product-form input,
-.product-form textarea {
-  display: block;
-  margin: 10px auto;
-  padding: 10px;
-  width: 80%;
-  border-radius: 8px;
-  border: 1px solid gold;
-  background: black;
-  color: gold;
-}
-.product-form button {
-  background: linear-gradient(90deg, #ff9900, gold);
-  color: black;
-  border: none;
-  padding: 10px 30px;
-  font-weight: bold;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-.product-form button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px gold;
-}
-
-/* =============================
-   GRID PRODUK
-============================= */
-.produk-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  justify-items: center;
-  align-items: start;
-  width: 100%;
-  max-width: 1400px;
-}
-
-/* Kartu Produk */
-.produk-card {
-  background: rgba(20, 20, 20, 0.95);
-  border: 1px solid gold;
-  border-radius: 15px;
-  box-shadow: 0 0 20px gold;
-  overflow: hidden;
-  width: 100%;
-  max-width: 280px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-.produk-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 30px gold;
-}
-
-/* Gambar Produk */
-.produk-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
-/* Info Produk */
-.produk-info {
-  padding: 15px;
-  text-align: center;
-}
-.produk-info h3 {
-  margin: 0;
-  font-size: 20px;
-  color: gold;
-}
-.produk-info p {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #ddd;
-}
-
-/* Footer Harga dan Tombol Beli */
-.produk-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  border-top: 1px solid gold;
-}
-.harga {
-  color: gold;
-  font-weight: bold;
-  font-size: 16px;
-}
-
-/* =============================
-   Tombol Aksi Produk
-============================= */
-
-/* Tombol beli (WhatsApp) */
-.beli-btn {
-  background: linear-gradient(90deg, #25d366, #128c7e);
-  color: white;
-  text-decoration: none;
-  padding: 6px 16px;
-  border-radius: 8px;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-.beli-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 15px #25d366;
-}
-
-/* Tombol hapus produk (ikon tong sampah) */
-.hapus-btn {
-  background: transparent;
-  border: 2px solid #ff5555;
-  color: #ff5555;
-  font-size: 16px;
-  margin-left: 8px;
-  border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.hapus-btn:hover {
-  background: #ff5555;
-  color: #000;
-  transform: scale(1.1);
-  box-shadow: 0 0 15px #ff4444, 0 0 25px #ff6666;
-}
-
-/* =============================
-   SLIDER PRODUK (TAK TERBATAS BARIS)
-============================= */
 .produk-slider-container {
-  position: relative;
-  width: 90%;
-  overflow: hidden;
   display: flex;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
+  margin-top: 20px;
 }
 
-.produk-container.horizontal-scroll {
+.produk-container {
   display: flex;
-  gap: 25px;
   overflow-x: auto;
   scroll-behavior: smooth;
-  padding: 20px;
-  scrollbar-width: none;
-}
-.produk-container.horizontal-scroll::-webkit-scrollbar {
-  display: none;
-}
-.produk-card {
-  min-width: 300px;
-  max-width: 300px;
-  flex-shrink: 0;
+  gap: 10px;
+  padding: 10px;
+  background-color: #222;
+  border-radius: 5px;
+  flex: 1;
 }
 
-/* Tombol panah kiri/kanan */
 .slider-btn {
-  background: rgba(0, 0, 0, 0.6);
-  border: 2px solid gold;
-  color: gold;
-  font-size: 26px;
-  font-weight: bold;
-  width: 50px;
-  height: 80px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.3s;
-  z-index: 5;
-}
-.slider-btn:hover {
-  background: gold;
-  color: black;
-  transform: scale(1.05);
-  box-shadow: 0 0 20px gold;
-}
-.prevBtn {
-  position: absolute;
-  left: -60px;
-}
-.nextBtn {
-  position: absolute;
-  right: -60px;
-}
-
-/* Tombol Lihat Semua */
-.lihat-semua-btn {
-  margin-top: 30px;
-  padding: 12px 30px;
-  font-size: 18px;
-  font-weight: 600;
-  background: linear-gradient(90deg, #ff9900, gold);
-  color: black;
+  background-color: #0ff;
   border: none;
-  border-radius: 12px;
+  padding: 10px;
+  border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s;
-}
-.lihat-semua-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px gold;
+  color: #111;
 }
 
-/* =============================
-   ANIMASI TRANSISI HALUS
-============================= */
-.fade-in {
-  animation: fadeIn 0.5s ease-in forwards;
-}
-.fade-out {
-  animation: fadeOut 0.4s ease-out forwards;
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.7);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.modal-content {
+  background-color: #222;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  color: #eee;
 }
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  to {
-    opacity: 0;
-    transform: translateY(20px);
-  }
+
+.close-btn {
+  color: #fff;
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #e74c3c;
+}
+
+.modal-content input, .modal-content textarea {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: none;
+}
+
+.modal-content button[type="submit"] {
+  background-color: #0ff;
+  color: #111;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content button[type="submit"]:hover {
+  background-color: #00cccc;
 }
