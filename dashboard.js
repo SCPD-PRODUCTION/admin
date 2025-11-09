@@ -8,14 +8,6 @@ menuToggle.addEventListener("click", () => {
 });
 
 // =============================
-// 🔹 Tombol Logout
-// =============================
-const logoutBtn = document.getElementById("logoutBtn");
-logoutBtn.addEventListener("click", () => {
-  window.location.href = "index.html"; // kembali ke halaman login
-});
-
-// =============================
 // 🔹 Klik judul DASHBOARD
 // =============================
 const dashboardTitle = document.getElementById("dashboardTitle");
@@ -26,29 +18,10 @@ dashboardTitle.addEventListener("click", () => {
 // =============================
 // 🔹 Firebase Import (v9 Modular)
 // =============================
-import {
-  initializeApp
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import {
-  getAuth,
-  signOut,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  doc
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
-import {
-  getStorage,
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-storage.js";
 
 // =============================
 // 🔹 Firebase Config
@@ -61,9 +34,12 @@ const firebaseConfig = {
   storageBucket: "scpd-production.appspot.com",
   messagingSenderId: "72136560829",
   appId: "1:72136560829:web:1c14d8087f9c3b88ade7d4",
-  measurementId: "G-LGXCFVNFTH"
+  measurementId: "G-LGXCFVNFTH",
 };
 
+// =============================
+// 🔹 Inisialisasi Firebase
+// =============================
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
@@ -74,6 +50,16 @@ onAuthStateChanged(auth, (user) => {
   if (!user) {
     window.location.href = "index.html";
   }
+});
+
+// =============================
+// 🔹 Tombol Logout
+// =============================
+const logoutBtn = document.getElementById("logoutBtn");
+logoutBtn.addEventListener("click", async () => {
+  await signOut(auth);
+  localStorage.clear();
+  window.location.href = "index.html";
 });
 
 // =============================
@@ -107,23 +93,27 @@ function showAddProductForm() {
     const file = document.getElementById("productImage").files[0];
 
     if (!name || !desc || !price || !file) {
-      alert("Semua kolom wajib diisi!");
+      alert("⚠️ Semua kolom wajib diisi!");
       return;
     }
 
     try {
-      // Upload ke Firebase Storage
-      const fileRef = ref(storage, `produk/${file.name}`);
+      const saveBtn = document.getElementById("saveProduct");
+      saveBtn.disabled = true;
+      saveBtn.textContent = "Menyimpan...";
+
+      // Upload gambar ke Firebase Storage
+      const fileRef = ref(storage, `produk/${Date.now()}_${file.name}`);
       await uploadBytes(fileRef, file);
       const imageUrl = await getDownloadURL(fileRef);
 
-      // Simpan ke Firestore
+      // Simpan data ke Firestore
       await addDoc(collection(db, "produk"), {
         nama: name,
         deskripsi: desc,
         harga: price,
         gambar: imageUrl,
-        filePath: `produk/${file.name}`,
+        filePath: `produk/${Date.now()}_${file.name}`,
         dibuat: new Date(),
       });
 
@@ -163,7 +153,7 @@ async function showProductList() {
         </div>
         <div class="produk-footer">
           <span class="harga">Rp ${data.harga}</span>
-          <div>
+          <div class="produk-actions">
             <a href="https://wa.me/6281234567890" target="_blank" class="beli-btn">Beli</a>
             <button class="hapus-btn" title="Hapus Produk"><i class="fas fa-trash"></i></button>
           </div>
@@ -181,7 +171,7 @@ async function showProductList() {
       const id = card.getAttribute("data-id");
       const path = card.getAttribute("data-path");
 
-      if (confirm("Yakin ingin menghapus produk ini?")) {
+      if (confirm("🗑️ Yakin ingin menghapus produk ini?")) {
         try {
           await deleteDoc(doc(db, "produk", id));
           if (path) {
@@ -189,7 +179,7 @@ async function showProductList() {
             await deleteObject(fileRef);
           }
           card.remove();
-          alert("🗑️ Produk berhasil dihapus!");
+          alert("✅ Produk berhasil dihapus!");
         } catch (error) {
           alert("❌ Gagal menghapus produk: " + error.message);
         }
